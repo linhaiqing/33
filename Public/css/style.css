@@ -1,0 +1,44 @@
+.center-header {background:#FF6666;color:#fff;font-size:14px;padding:15px 0px 0 0;text-align:center;}
+.center-header a{color:#fff;}
+.center-list i{color:#FF6666;}
+.notice-word{display:inline-blcok;font-size:12px;float:right;margin-right:10px;border-radius:5px;padding:3px 5px;border:1px solid #FF6666;}
+.left{float:left;}
+.right{float:right;}
+.clear{clear:both;}
+.person-pic{width:25%;text-align:center;padding-top:5px;margin:0 auto;}
+.person-pic img{border-radius:50%;width:100%;}
+.person-all{width:80%;margin:0 auto;}
+.person-all span{//font-weight:bold;}
+.center-header .weui_navbar_item{opacity:0;padding-top:8px;padding-bottom:8px;font-size:12px; -webkit-animation: person-num 3s ease 0s 1 alternate forwards;}
+.center-header .weui_navbar_item span{font-size:16px;color:yellow;}
+.weui_cells .weui_navbar_item{opacity:1;padding-top:8px;padding-bottom:8px;font-size:12px;background:#efedf1}
+.weui_cells .weui_navbar_item span{font-size:16px;color:#ff6666;}
+.weui_cells  a{color:#555;}
+.person-num{width:33.333%;background:rgba(0,0,0,0.3);margin-top:2px;padding:8px 0;
+		}
+@-webkit-keyframes person-num /* Safari 和 Chrome */
+{
+from {background: rgba(0,0,0,0);opacity:0;-webkit-transform:rotatey(180deg);}
+to {background: rgba(0,0,0,0.3);opacity:1;-webkit-transform:rotatey(0deg);}
+}
+input{padding-left:10px;}
+.money{display:inline-blcok;float:left;width:50%;padding:10px 0;border-top:1px solid #ccc;text-align:center}
+#window{position:fixed;width:100%;height:100%;background:#FF6666;left:100%;top:0;z-index:99999; -webkit-animation: myfirst 0s linear 0.7s 1 alternate forwards;}
+.jumpmove{ -webkit-animation: myfirst 0.2s linear 0.5s 1 alternate forwards;}
+@-webkit-keyframes myfirst /* Safari 和 Chrome */
+{
+0%   {opacity:1;}
+100% { opacity:0.4;}
+}
+#weui_actionsheet {bottom:-50px;opacity:0; -webkit-animation: actionSheet_wrap 0.5s ease 0s 1 alternate forwards;}
+#actionSheet_wrap a{color:#000;}
+@-webkit-keyframes actionSheet_wrap /* Safari 和 Chrome */
+{
+0%   { bottom:-50px;}
+100% { opacity:1;bottom:0px;}
+}
+
+.pagelist{ text-align:center;  padding:8px 0;line-height:30px;}
+.pagelist a{ margin:0 2px; border:#999 solid 1px; display:inline-block; padding:2px 6px 1px; line-height:16px; background:#fff; color:#999;}
+.pagelist span{ margin:0 5px; border:#999 solid 1px; display:inline-block; padding:2px 6px 1px; line-height:16px; color:#999; color:#fff; background:#999;}
+	
