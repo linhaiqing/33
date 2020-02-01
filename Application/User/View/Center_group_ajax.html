@@ -1,0 +1,24 @@
+<if condition="$type neq down and $state gt 2 ">
+<div id="reload<?php echo $state-2;?>">
+<div style="text-align:center;padding:8px 0;color:#ff6666;font-size:14px;border:1px dashed #ff6666;border-radius:5px;margin:20px 10px;" onclick="reload('<?php echo $state-2;?>','up')">
+<i class="icon-upload icon-large" style="color:#ff6666;"></i> 加载第<?php echo $state-2;?>渡人脉信息</div>
+</div>
+</if>
+<div class="weui_cells_title" style="border-bottom:1px solid #ccc">您的<?php echo $state-1;?>渡人脉<font size="2.5" color="red">[{$more}个]</font></div>
+<volist name="first_info" id="vv" empty="$empty" alt="1" mod="2">
+
+<div class="left group" style="overflow:hidden;" <neq name="mod" value="1">style="background:#efedf1"</neq> >
+	<div><img src="{$vv.headimgurl}" alt="" style="width:30px;display:block;margin:0 auto;"></div>
+	<span style="font-size:14px;color:#333;white-space: nowrap;text-overflow:ellipsis;overflow:hidden;width:95%" <if condition="$vv.subscribe eq 0">style="color:red"</if> >{$vv.nickname}</span><br />
+	{$vv.agent}
+</div>
+</volist>
+<div class="clear"></div>
+</div>
+
+<if condition="$type neq up and $state lt 10 ">
+<div id="reload{$state}">
+<div style="text-align:center;padding:8px 0;color:#ff6666;font-size:14px;border:1px dashed #ff6666;border-radius:5px;margin:20px 10px;" onclick="reload('{$state}','down')">
+<i class="icon-download icon-large" style="color:#ff6666;"></i> 加载第{$state}渡人脉信息</div>
+</div>
+</if>

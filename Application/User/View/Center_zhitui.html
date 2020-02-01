@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<meta content="telephone=no" name="format-detection">
+    <title>直推人脉</title>
+   <!--  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="__PUBLIC__/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/weui.min.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css"/>
+	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+	<script src="__PUBLIC__/js/slide.js"></script>
+	<script src="__PUBLIC__/js/base.js"></script>
+	<script src="__PUBLIC__/layer-mobile/layer.js"></script>
+	<link rel="stylesheet" href="__PUBLIC__/css/slide.css">
+	<style>
+	.group-header{background:#FF6666;width:100%;}
+	.group-header .group{width:100%;color:#fff;text-align:center;padding:15px 0;font-size:16px;}
+	.group-header .group span{font-size:14px;color:yellow}
+	#list .group{width:33.3333%;text-align:center;padding:10px 0;font-size:12px;color:#999;}
+	#list .group img{border-radius:50%;width:100%;}
+	.weui_cell{font-size:14px;}
+	.weui_cells{padding-bottom:30px;}
+	.weui_cell:focus{background:#efedf1}
+	</style>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+wx.config({
+			debug: false,
+			appId: '<?php echo $signPackage["appId"];?>',
+			timestamp: <?php echo $signPackage["timestamp"];?>,
+			nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+			signature: '<?php echo $signPackage["signature"];?>',
+			jsApiList: [
+				// 所有要调用的 API 都要加到这个列表中
+				'checkJsApi',
+				'addCard',
+				'chooseCard',
+				'openCard',
+				'onMenuShareTimeline',
+				'onMenuShareAppMessage',
+				'closeWindow',
+				'hideOptionMenu',
+				'hideAllNonBaseMenuItem',
+				'menuItem:profile'
+			  ]
+		});
+wx.ready(function(){
+	wx.hideAllNonBaseMenuItem();//alert('<?php echo $paysign["timeStamp"];?>');#E25B5B
+});
+</script>
+</head>
+<body  style="background: #efedf1;margin-bottom:70px;">
+	<div class="group-header">
+		<div class="left group" data-id="group1" style="background:-webkit-gradient(linear, 0% 0%, 100% 100%, from(#E25B5B), to(#862525));">
+		<div style="font-size:14px;">{$Think.session.user_info.nickname}，关于您的统计</div><div class=" icon-cog icon-spin icon-2x" style="margin:10px 0;color:#D8D5D5"></div>
+		<div style="margin:0 0 5px 0;">
+		<span style="color:yellow;width:32%;display:inline-block;border-bottom:1px dashed yellow;">扫码关注<br />{$nums}人</span>
+		<span style="color:yellow;width:32%;display:inline-block;border-bottom:1px dashed yellow;">参与团购<br />{$agent_nums}人</span>
+		<span style="color:yellow;width:32%;display:inline-block;border-bottom:1px dashed yellow;">直推奖励<br />{$money}元</span>
+		</div>
+		<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	
+	<div class="weui_cells">
+		<div class="weui_cells_title">扫码关注会员列表<font size="1.5" color="red">[名字变红表示已取关、点击查看关注时间]</font></div>
+		<div id="list"></div>
+	</div>
+	
+</body>
+<script>
+getpage(0);
+	function getpage(p){
+//var sn = $('#order_sn').val();//alert(sn);
+	$('#list').html('<div style="text-align:center;margin-top:30px;"><img src="__PUBLIC__/admin/images/loading.gif" width="50px" ></div>');
+	$("#list").load(
+		"{:U('zhitui_ajax')}?p="+p,
+		function() {}
+	);
+}
+function subscribe(text){
+	layer.open({
+		style:'background:rgba(134,37,37,0.8);color:#fff',
+		content: text,
+		time: 3 //2秒后自动关闭
+	});
+}
+function reload(p){
+
+$('#reload'+p).html('<div style="text-align:center;margin-top:30px;"><img src="__PUBLIC__/admin/images/loading.gif" width="50px" ></div>');
+$("#reload"+p).load(
+	"{:U('zhitui_ajax')}?p="+p,
+		function() {loadingclose();$("#reload"+state).attr("id","");}
+	);
+	
+}
+</script>
+</html>

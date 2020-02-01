@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>参与团购</title>
+    <link rel="stylesheet" href="__PUBLIC__/css/weui.min.css"/>
+	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+	<script src="__PUBLIC__/js/slide.js"></script>
+	<script src="__PUBLIC__/js/base.js"></script>
+	<link rel="stylesheet" href="__PUBLIC__/css/slide.css">
+	<style>
+	.flexslider {border: 0;margin: 0px;}
+	input{padding-left:10px;}
+	.money{display:inline-blcok;float:left;width:50%;padding:10px 0;border-top:1px solid #ccc;text-align:center;color:red;}
+	.weui_dialog_ft .primary{color:#ff6666;}
+	.weui_cells_checkbox .weui_check:checked + .weui_icon_checked:before {color: #ff6666;}
+	.weui_cells_radio .weui_check:checked + .weui_icon_checked:before {color: #ff6666;}
+	</style>
+	<script>
+	//首页幻灯片函数
+	$(window).load(function() {
+          $('.flexslider').flexslider({ 
+		  animation: "slide",
+		  easing: "swing",
+		  slideshow: true,
+		  animationSpeed: 1000,
+		  pauseOnHover: false,
+		  directionNav: false, //Boolean:  (true/false)是否显示左右控制按钮
+		  pausePlay: false,//是否显示播放暂停按钮
+		   controlNav: false, //Boolean:  usage是否显示控制菜单//什么是控制菜单？
+		  slideshowSpeed: 2000
+		  });     
+     });
+	</script>
+</head>
+<body style="background: #fbf9fe;margin-bottom:70px;">
+	<div class="flexslider">
+		<ul class="slides" style="background:#000;">
+		<volist name="banner" id="vv">
+		  <li><img src="/{$vv.pic_url}" width="100%"></li>
+		</volist>
+		</ul>   
+	</div>
+	<form action="{:U('buy')}" method="post" onsubmit="return checked()">
+	<div class="weui_cells weui_cells_form">
+		<div class="weui_cell">
+			<div class="weui_cell_hd"><label class="weui_label">产品</label></div>
+			<div class="weui_cell_bd weui_cell_primary" style="text-align:center;background:#ff6666;color:#fff">
+				团购优惠券
+			</div>
+		</div>
+		<!-- <div class="weui_cell weui_cell_select weui_select_after">
+			<div class="weui_cell_hd">
+				权限
+			</div>
+			<div class="weui_cell_bd weui_cell_primary" style="padding-left:20px;">
+				<select class="weui_select" name="" id="select" style="color:red;">
+					<option value="1">市级代理</option>
+					<option value="2">省级代理</option>
+					<option value="3">全国总代</option>
+				</select>
+			</div>
+		</div> -->
+		<div class="weui_cells_title">{$user_info.nickname},选择您的购买权限,如果已购买三度、六度，升级时只需补差价即可</div>
+		<div class="weui_cells weui_cells_radio" style="font-size:14px;">
+            <label class="weui_cell weui_check_label" for="x11" style="padding-left:10%;">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>{$daili_info[0].first_name}[￥{$base_fee.first_fee}]　<span style="color:red;font-size:14px;"><?php if($fee['first_fee'] == 0.00){echo "［已购买］";}?></span></p>
+                </div>
+                <div class="weui_cell_ft">
+                    <input type="radio" class="weui_check" name="radio1" value="1" id="x11"  <?php if($fee['first_fee'] == 0.00){echo "disabled";}else{echo 'checked="checked"';}?>>
+                    <span class="weui_icon_checked"></span>
+                </div>
+            </label>
+            <label class="weui_cell weui_check_label" for="x12" style="padding-left:10%;">
+
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>{$daili_info[0].second_name}[￥{$base_fee.second_fee}]　<span style="color:red;font-size:14px;"><?php if($fee['second_fee'] == 0.00){echo "［已购买］";}?></span></p>
+                </div>
+                <div class="weui_cell_ft">
+                    <input type="radio" name="radio1" class="weui_check" value="2" id="x12" <?php if($fee['second_fee'] == 0.00){echo "disabled";}if($fee['first_fee'] == 0.00 && $fee['second_fee'] != 0.00){echo 'checked="checked"';}?>>
+                    <span class="weui_icon_checked"></span>
+                </div>
+            </label>
+			<label class="weui_cell weui_check_label" for="x13" style="padding-left:10%;">
+
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>{$daili_info[0].third_name}[￥{$base_fee.third_fee}]　<span style="color:red;font-size:14px;"><?php if($fee['third_fee'] == 0.00){echo "［已购买］";}?></span></p>
+                </div>
+                <div class="weui_cell_ft">
+                    <input type="radio" name="radio1" class="weui_check" value="3" id="x13" <?php if($fee['third_fee'] == 0.00){echo "disabled";}if($fee['second_fee'] == 0.00){echo 'checked="checked"';}?>>
+                    <span class="weui_icon_checked"></span>
+                </div>
+            </label>
+        </div>
+		<div class="weui_cell" style="font-size:14px;">
+			<div class="weui_cell_hd"><label class="weui_label">姓名</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+				<input class="weui_input" type="text" name="username" id="username" value="{$address_info.username}" placeholder="请输入姓名">
+			</div>
+		</div>
+		<div class="weui_cell" style="font-size:14px;">
+			<div class="weui_cell_hd"><label class="weui_label">手机号</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+				<input class="weui_input" type="tel" name="telphone" id="telphone" value="{$address_info.telphone}" placeholder="请输入手机号">
+			</div>
+		</div>
+		<input type="hidden" name="address"  value="未知">
+		<!-- <div class="weui_cell" style="font-size:14px;">
+			<div class="weui_cell_hd"><label class="weui_label">微信号</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+				<input class="weui_input" type="text"  name="wxid" id="wxname" value="{$user_info.wxid}" placeholder="请输入个人微信号，确保真实有效">
+			</div>
+		</div>
+		
+		<div class="weui_cell" style="font-size:14px;">
+			<div class="weui_cell_hd"><label class="weui_label">地址</label></div>
+			<div class="weui_cell_bd weui_cell_primary">
+				<input class="weui_input" type="text" name="address" id="address" value="{$address_info.address}" placeholder="请输入联系地址">
+			</div>
+		</div>
+		<input type="hidden" name="address_id" value="{$address_info.address_id}"> -->
+		<div class="weui_cells weui_cells_checkbox" style="margin-top:0;">
+            <label class="weui_cell weui_check_label" for="s11">
+                <div class="weui_cell_hd">
+                    <input type="checkbox" class="weui_check" name="checkbox1" value="1" id="s11" checked="checked">
+                    <i class="weui_icon_checked"></i>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary" style="font-size:14px;">
+                    <p><a href="{$daili_info[0].daili_url}">　　同意《代理购买协议》</a></p>
+                </div>
+            </label>
+        </div>
+		
+		<div class="weui_btn_area" style="position:fixed;bottom:0;width:100%;left:0;background:#fff;margin:0;z-index:9999;">
+			<span class="money">价格：￥<span id="num">{$fee.first_fee}</span></span>
+            <span style="display:inline-blcok;float:left;width:50%;"><button class="weui_btn weui_btn_warn" type="submit" id="btn" style="height:50px;border-radius:0;">购 买</button></span>
+        </div>
+	</div>
+	</form>
+	<!-- <div  style="margin-top:20px;font-size:12px;color:#999;text-align:center;"></div> -->
+	<div id="toast" style="display: none;">
+        <div class="weui_mask_transparent"></div>
+        <div class="weui_toast">
+            <i class="weui_icon_toast"></i>
+            <p class="weui_toast_content">已完成</p>
+        </div>
+    </div>
+	
+</body>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+$(function() {
+
+    // 页面加载，赋值
+    var mark = $('input[name="radio1"]:checked').val();
+    if(mark == 1){
+		$("#num").text('{$fee.first_fee}');
+	}else if(mark == 2){
+		$("#num").text('{$fee.second_fee}');
+	}else if(mark == 3){
+		$("#num").text('{$fee.third_fee}');
+	}else{
+		$('#btn').attr('type','button');
+		$("#btn").addClass("weui_btn_disabled");
+	}
+});
+	$("#s11").bind("change", function(){
+		var value = $(this).is(':checked');
+		if(value == true){
+			$("#btn").removeClass("weui_btn_disabled");
+		}else{
+			//$("#btn").removeClass("weui_btn_primary");
+			$("#btn").addClass("weui_btn_disabled");
+		}
+	});
+	function checked(){
+		if($('#username').val() == ''){dialog2("请填写您的姓名");return false;exit;}
+		//if($('#wxname').val() == ''){dialog2("请填写您的微信号");return false;exit;}
+		if($('#telphone').val() == ''){dialog2("请填写您的手机号");return false;exit;}else{
+			var length = $('#telphone').val().length;
+			var mobile = /(1[3-9]\d{9}$)/ ;
+			if(length != 11 || mobile.test($('#telphone').val()) == false){dialog2("请填写正确的手机号");return false;exit;}
+		}
+		//if($('#address').val() == ''){dialog2("请填写您的地址");return false;exit;}
+		if($('#s11').is(':checked') == false){dialog2("您还未同意购买协议");return false;exit;}
+		loading('支付请求中');
+		
+	}
+	$('input[name="radio1"]').bind("change", function(){
+		var value = $(this).val();
+		if(value == 1){
+			$("#num").text('{$fee.first_fee}');
+		}else if(value == 2){
+			$("#num").text('{$fee.second_fee}');
+		}else if(value == 3){
+			$("#num").text('{$fee.third_fee}');
+		}
+	});
+</script>
+<script>
+wx.config({
+			debug: false,
+			appId: '<?php echo $signPackage["appId"];?>',
+			timestamp: <?php echo $signPackage["timestamp"];?>,
+			nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+			signature: '<?php echo $signPackage["signature"];?>',
+			jsApiList: [
+				// 所有要调用的 API 都要加到这个列表中
+				'checkJsApi',
+				'addCard',
+				'chooseCard',
+				'openCard',
+				'onMenuShareTimeline',
+				'onMenuShareAppMessage',
+				'showOptionMenu',
+				'hideAllNonBaseMenuItem',
+				'menuItem:profile'
+			  ]
+		});
+wx.ready(function(){
+	wx.hideAllNonBaseMenuItem();
+});
+
+</script>
+</html>

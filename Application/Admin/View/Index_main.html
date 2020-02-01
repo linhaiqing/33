@@ -1,0 +1,127 @@
+﻿ <!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+<title>系统管理后台</title>
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/base.css">
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/js/Chart.min.js"></script>
+</head>
+<body>
+<style>
+.view{padding:30px 0;background:#7cbae5;margin:10px 20px;color:#fff;text-align:center;}
+.view:hover{background:#73afd9;}
+.number{font-size:30px;}
+</style>
+<div class="well">
+	<div class="col-sm-12 alert-success" style="font-size:16px;padding:10px 20px;margin-bottom:10px;">代理统计</div>
+	<div class="col-sm-3">
+		<div class="view">
+			<div class="inner">
+			￥<em class="number">{$agent_order_totalfee}</em><div class="title">代理成交额</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-3">
+		<div class="view">
+			<div class="inner">
+			￥<em class="number">{$hongbao_totalfee}</em><div class="title">红包发放总数</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-3">
+		<div class="view">
+			<div class="inner">
+			￥<em class="number">{$zhitui_totalfee}</em><div class="title">红包奖励总数</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-3">
+		<div class="view" style="background:#FDB45C;">
+			<div class="inner">
+			￥<em class="number"><?php echo $agent_order_totalfee - $hongbao_totalfee - $zhitui_totalfee ;?></em><div class="title">代理模块收益</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12 alert-success" style="font-size:16px;padding:10px 20px;margin-bottom:10px;">会员统计</div>
+	<div class="col-sm-4 text-center">
+		<div id="canvas-holder">
+			<canvas id="chart-area" width="250px" height="250px" />
+		</div>
+	</div>
+	<div class="col-sm-8 text-center">
+		<div id="canvas-holder">
+			<canvas id="canvas" height="250" width="700"></canvas>
+		</div>
+	</div>
+	<div class="col-sm-4 text-center">会员属性比例图</div>
+	<div class="col-sm-8 text-center">会员关注量走势图</div>
+
+	<div style="clear:both"></div>
+</div>
+
+<script>
+	var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+		var lineChartData = {
+			labels : ["{$user_line.7.day}","{$user_line.6.day}","{$user_line.5.day}","{$user_line.4.day}","{$user_line.3.day}","{$user_line.2.day}","{$user_line.1.day}"],
+			datasets : [
+				{
+					label: "会员增长",
+					fillColor : "rgba(151,187,205,0.2)",
+					strokeColor : "green",
+					pointColor : "#44b549",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(220,220,220,1)",
+					data : [{$user_line.7.num},{$user_line.6.num},{$user_line.5.num},{$user_line.4.num},{$user_line.3.num},{$user_line.2.num},{$user_line.1.num}]
+				}
+			]
+
+		};
+var pieData = [
+				{
+					value: {$user_info.normal},
+					color:"#F7464A",
+					highlight: "#FF5A5E",
+					label: "普通会员"
+				},
+				{
+					value: {$user_info.first},
+					color: "#46BFBD",
+					highlight: "#5AD3D1",
+					label: "一级会员"
+				},
+				{
+					value: {$user_info.second},
+					color: "#FDB45C",
+					highlight: "#FFC870",
+					label: "二级会员"
+				},
+				{
+					value: {$user_info.third},
+					color: "#949FB1",
+					highlight: "#A8B3C5",
+					label: "三级会员"
+				},
+				{
+					value: {$user_info.no_subscribe},
+					color: "#4D5360",
+					highlight: "#616774",
+					label: "取消关注"
+				}
+
+			];
+			
+
+			window.onload = function(){
+				var ctx = document.getElementById("canvas").getContext("2d");
+		window.myLine = new Chart(ctx).Line(lineChartData);
+				var ctx = document.getElementById("chart-area").getContext("2d");
+				window.myPie = new Chart(ctx).Pie(pieData);
+			};
+	</script>
+</body></html>

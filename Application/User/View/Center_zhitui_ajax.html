@@ -1,0 +1,20 @@
+<volist name="zhitui_info" id="vv" empty="" alt="1">
+<div class="weui_cell" onclick="subscribe('{$vv.nickname}于{$vv.subscribe_time}成功扫码关注')" <if condition="$vv.subscribe eq 0">style="color:red"</if> >
+	<div class="weui_cell_hd"><img src="{$vv.headimgurl}" alt="" style="width:30px;margin-right:5px;display:block"></div>
+	<div class="weui_cell_bd weui_cell_primary">
+		<p style="white-space: nowrap;text-overflow:ellipsis;overflow:hidden;">{$vv.nickname}</p>
+	</div>
+	<div class="weui_cell_ft" <if condition="$vv.subscribe eq 0">style="color:red"</if> >{$vv.agent}</div>
+</div>
+</volist>
+
+
+<if condition="$more eq 0 ">
+<div id="">
+<div style="background:#fff;text-align:center;padding:4px 0;color:#777;font-size:14px;">已加载完</div>
+</div>
+<else />
+<div id="reload{$p}">
+<div style="background:#efedf1;text-align:center;padding:8px 0;color:#ff6666;font-size:14px;" onclick="reload('{$p}')"><i class="icon-download icon-large" style="color:#ff6666;"></i> 加载更多</div>
+</div>
+</if>

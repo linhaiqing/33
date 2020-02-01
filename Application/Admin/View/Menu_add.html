@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<link rel="stylesheet" href="__PUBLIC__/css/style.css" />
+	<title>添加自定义菜单</title>
+</head>
+<body>
+	<form action="__SELF__" method="post">
+	<table class="addmenu">
+		<tr>
+			<td>菜单名称</td>
+			<td><input type="text" name="title" value="" /></td>
+		</tr>
+
+		<tr>
+			<td>父级菜单</td>
+			<td>
+				<select name="pid" id="" >
+				<option value="0">设为一级菜单</option>
+				<option value="1">URL跳转链接</option>
+				<option value="1">微信扩展菜单</option>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td>菜单类型</td>
+			<td>
+				<select name="type">
+				<option value="click">关键词回复</option>
+				<option value="view">URL跳转链接</option>
+				<option value="scancode_push">扫一扫</option>
+				<option value="scancode_waitmsg">扫一扫</option>
+				<option value="pic_sysphoto">拍照发图</option>
+				<option value="pic_photo_or_album">从相册或相机发图</option>
+				<option value="pic_weixin">相册发图</option>
+				<option value="location_select">发送地理位置</option>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td>关联关键词</td>
+			<td><input type="text" name="keyword" value="44444" /></td>
+		</tr>
+		<tr>
+			<td>外链地址</td>
+			<td><input type="text" name="url" value="" /></td>
+		</tr>
+		<tr>
+			<td>显示</td>
+			<td><input type="radio"  name="is_show" value="1" checked />显示<input type="radio" name="is_show" value="0" />隐藏</td>
+		</tr>
+		<tr>
+			<td>排序</td>
+			<td><input type="text" name="code" value="" /></td>
+		</tr>
+	</table>
+		<input type="submit" value="确认提交" />
+		</form>
+</body>
+</html>

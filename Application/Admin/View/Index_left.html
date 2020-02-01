@@ -1,0 +1,157 @@
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/base.css">
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function(){
+	$('.menu_title').click(function(){
+
+		var obj = $(this).next('dd');
+		if(obj.css("display") == 'block'){
+			obj.css("display","none");
+		}else{
+			$('dd').each(function(){
+				$(this).css("display","none");
+			});
+			obj.css("display","block");
+		}
+	});
+	$('.menu dl dd ul li').click(function(){
+		$('.menu dl dd ul li').each(function(){
+			$(this).css('background','');
+			$(this).css('color','');
+		});
+		$(this).css('background','#44b549');
+		$(this).css('color','#fff');
+	});
+
+});
+</script>
+
+<div class="left">
+  <div class="menu">
+    <dl>
+      <dt class="menu_title"><i class="icon-cogs icon-large"></i>　微信</dt>
+      <dd style="display:none;">
+        <ul>
+            <a href="{:U('Base/config')}" target="main-frame"><li>微信绑定</li></a>
+            <a href="{:U('Base/menu')}" target="main-frame"><li>菜单设置</li></a>
+            <a href="{:U('Base/subscribe')}" target="main-frame"><li>关注回复</li></a>
+            <a href="{:U('Base/text')}" target="main-frame"><li>文本回复</li></a>
+            <a href="{:U('Base/news')}" target="main-frame"><li>图文回复</li></a>
+            <a href="{:U('Base/custom')}" target="main-frame"><li>在线客服</li></a>
+        </ul>
+      </dd>
+    </dl>
+	<dl>
+      <dt class="menu_title"><i class="icon-file-alt icon-large"></i>　系统信息</dt>
+      <dd  style="DISPLAY: none">
+        <ul>
+          <a href="{:U('Index/system')}" target="main-frame"><li>参数信息</li></a>
+        </ul>
+      </dd>
+    </dl>
+	<dl>
+      <dt class="menu_title"><i class="icon-file-alt icon-large"></i>　模版消息</dt>
+      <dd  style="DISPLAY: none">
+        <ul>
+          <a href="{:U('Index/template')}" target="main-frame"><li>参数配置</li></a>
+        </ul>
+      </dd>
+    </dl>
+    <dl>
+      <dt class="menu_title"><i class="icon-rss icon-large"></i>　代理管理</dt>
+      <dd  style="DISPLAY: none">
+        <ul>
+          <a href="{:U('Daili/index')}" target="main-frame"><li>参数设置</li></a>
+          <a href="{:U('Daili/orders')}" target="main-frame"><li>订单管理</li></a>
+        </ul>
+      </dd>
+    </dl>
+	 <dl>
+      <dt class="menu_title"><i class="icon-rss icon-large"></i>　会员管理</dt>
+      <dd  style="DISPLAY: none">
+        <ul>
+          <a href="{:U('Daili/users')}" target="main-frame"><li>会员列表</li></a>
+        </ul>
+      </dd>
+    </dl>
+	<dl>
+      <dt class="menu_title"><i class="icon-rss icon-large"></i>　代理商管理</dt>
+      <dd  style="DISPLAY: none">
+        <ul>
+          <a href="{:U('Daili/daili')}" target="main-frame"><li>代理商列表</li></a>
+          <a href="{:U('Daili/daijin')}" target="main-frame"><li>核销记录</li></a>
+        </ul>
+      </dd>
+    </dl>
+	<dl>
+      <dt class="menu_title"><i class="icon-envelope-alt icon-large"></i>　红包专区</dt>
+      <dd  style="DISPLAY: none">
+        <ul>
+          <a href="{:U('Daili/hongbao')}" target="main-frame"><li>发放记录</li></a>
+        </ul>
+      </dd>
+    </dl>
+	<dl>
+      <dt class="menu_title"><i class="icon-shopping-cart icon-large"></i>　商城管理</dt>
+      <dd  style="DISPLAY: none">
+        <ul>
+          <a href="{:U('Shop/setting')}" target="main-frame"><li>商城设置</li></a>
+          <a href="{:U('Shop/categrey')}" target="main-frame"><li>分类管理</li></a>
+          <a href="{:U('Shop/good')}" target="main-frame"><li>商品管理</li></a>
+        </ul>
+      </dd>
+    </dl>
+	<dl>
+      <dt class="menu_title"><i class="icon-tag icon-large"></i>　订单管理</dt>
+      <dd  style="DISPLAY: none">
+        <ul>
+          <a href="{:U('Shop/order')}" target="main-frame"><li>订单列表</li></a>
+          <a href="javascript:void(0);" target="main-frame" data-toggle="modal" data-target=".bs-example-modal-lg"><li>退换货管理</li></a>
+        </ul>
+      </dd>
+    </dl>
+    <dl>
+      <dt class="menu_title"><i class="icon-magnet icon-large"></i>　分销管理</dt>
+      <dd  style="DISPLAY: none">
+        <ul>
+          <a href="{:U('Index/broke')}" target="main-frame"><li>收益明细</li></a>
+          <a href="{:U('Index/broke_record')}" target="main-frame"><li>提现记录</li></a>
+        </ul>
+      </dd>
+    </dl>
+	<!-- <dl>
+      <dt class="menu_title"><i class="icon-comments-alt icon-large"></i>　即时聊天</dt>
+      <dd  style="DISPLAY: none">
+        <ul>
+          <a href="javascript:void(0);" target="main-frame" data-toggle="modal" data-target=".bs-example-modal-lg"><li>聊天ing</li></a>
+        </ul>
+      </dd>
+    </dl> -->
+	<dl>
+      <dt class="menu_title"><i class="icon-comments-alt icon-large"></i>　客户疑答</dt>
+      <dd  style="DISPLAY: none">
+        <ul>
+          <a href="{:U('Index/question')}" target="main-frame"><li>问题列表</li></a>
+        </ul>
+      </dd>
+    </dl>
+  </div>
+</div>
+
+	<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+	  <div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			  <h4 class="modal-title" id="myLargeModalLabel">系统通知</h4>
+			</div>
+			<div class="modal-body">
+			  功能后期添加，请等待
+			</div>
+		  </div>
+	  </div>
+	</div>

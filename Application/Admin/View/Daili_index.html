@@ -1,0 +1,302 @@
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/base.css">
+<link href="__PUBLIC__/admin/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+<style>
+.btn-default{background:#44b549;color:#fff;}
+.form-group{padding:5px 0;}
+</style>
+<div class="container-fluid main">
+	<div class="main-top"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>代理管理</div>
+	<div class="main-content">
+		<div>
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+		    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">回复设置</a></li>
+		    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">二维码设置</a></li>	
+		  </ul>
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+		    <div role="tabpanel" class="tab-pane active" id="home">
+		    	
+		    	<div class="well" style="margin-top:20px;padding-bottom:60px;">
+				<h5 class="" style="padding:5px 10px;line-height:30px;"></h5>
+		    		<form class="form-horizontal" action="__SELF__" method="post" enctype="multipart/form-data"  onsubmit="return check()">
+		    		 <div class="form-group">
+					    <label for="inputPassword3" class="col-sm-2 control-label">1级代理名称</label>
+					    <div class="col-sm-4">
+					      <input type="text"  class="form-control" id="input4" name="first_name" value="{$daili_info[0]['first_name']}" placeholder="">
+					    </div>
+						<label for="inputPassword3" class="col-sm-2 control-label">1级代理价格</label>
+					    <div class="col-sm-4">
+					      <input type="text"  class="form-control" id="input4" name="first_fee" value="{$daili_info[0]['first_fee']}" placeholder="">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputPassword3" class="col-sm-2 control-label">2级代理名称</label>
+					    <div class="col-sm-4">
+					      <input type="text"  class="form-control" id="input4" name="second_name" value="{$daili_info[0]['second_name']}" placeholder="">
+					    </div>
+						<label for="inputPassword3" class="col-sm-2 control-label">2级代理价格</label>
+					    <div class="col-sm-4">
+					      <input type="text"  class="form-control" id="input4" name="second_fee" value="{$daili_info[0]['second_fee']}" placeholder="">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputPassword3" class="col-sm-2 control-label">3级代理名称</label>
+					    <div class="col-sm-4">
+					      <input type="text"  class="form-control" id="input4" name="third_name" value="{$daili_info[0]['third_name']}" placeholder="">
+					    </div>
+						<label for="inputPassword3" class="col-sm-2 control-label">3级代理价格</label>
+					    <div class="col-sm-4">
+					      <input type="text"  class="form-control" id="input4" name="third_fee" value="{$daili_info[0]['third_fee']}" placeholder="">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputPassword3" class="col-sm-2 control-label">1级返红包金额</label>
+					    <div class="col-sm-2">
+					      <input type="text"  class="form-control" id="input4" name="first_hongbao" value="{$daili_info[0]['first_hongbao']}" placeholder="">
+					    </div>
+						<label for="inputPassword3" class="col-sm-2 control-label">2级返红包金额</label>
+					    <div class="col-sm-2">
+					      <input type="text"  class="form-control" id="input4" name="second_hongbao" value="{$daili_info[0]['second_hongbao']}" placeholder="">
+					    </div>
+						<label for="inputPassword3" class="col-sm-2 control-label">3级返红包金额</label>
+					    <div class="col-sm-2">
+					      <input type="text"  class="form-control" id="input4" name="third_hongbao" value="{$daili_info[0]['third_hongbao']}" placeholder="">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputPassword3" class="col-sm-2 control-label">4级返红包金额</label>
+					    <div class="col-sm-2">
+					      <input type="text"  class="form-control" id="input4" name="four_hongbao" value="{$daili_info[0]['four_hongbao']}" placeholder="">
+					    </div>
+						<label for="inputPassword3" class="col-sm-2 control-label">5级返红包金额</label>
+					    <div class="col-sm-2">
+					      <input type="text"  class="form-control" id="input4" name="five_hongbao" value="{$daili_info[0]['five_hongbao']}" placeholder="">
+					    </div>
+						<label for="inputPassword3" class="col-sm-2 control-label">6级返红包金额</label>
+					    <div class="col-sm-2">
+					      <input type="text"  class="form-control" id="input4" name="six_hongbao" value="{$daili_info[0]['six_hongbao']}" placeholder="">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputPassword3" class="col-sm-2 control-label">7级返红包金额</label>
+					    <div class="col-sm-2">
+					      <input type="text"  class="form-control" id="input4" name="seven_hongbao" value="{$daili_info[0]['seven_hongbao']}" placeholder="">
+					    </div>
+						<label for="inputPassword3" class="col-sm-2 control-label">8级返红包金额</label>
+					    <div class="col-sm-2">
+					      <input type="text"  class="form-control" id="input4" name="eight_hongbao" value="{$daili_info[0]['eight_hongbao']}" placeholder="">
+					    </div>
+						<label for="inputPassword3" class="col-sm-2 control-label">9级返红包金额</label>
+					    <div class="col-sm-2">
+					      <input type="text"  class="form-control" id="input4" name="nine_hongbao" value="{$daili_info[0]['nine_hongbao']}" placeholder="">
+					    </div>
+					  </div>
+					  <volist name="banner" id="vv" key="kk" empty="还没有上传幻灯片图片">
+					  <div class="form-group">
+					    <label for="inputPassword3" class="col-sm-2 control-label">幻灯片{$kk}</label>
+					    <div class="col-sm-7">
+					      <input type="text"  class="form-control" name="pic_url[]" value="{$vv.pic_url}" placeholder="" readonly>				  
+					    </div>
+						<div class="col-sm-1">
+					      	<button type="button" onclick="yulan(this)"  class="btn btn-success">预览</button>		  
+					    </div>
+						<div class="col-sm-1">
+					      	<button type="button" onclick="del(this)" data="{$vv.id}"  class="btn btn-default">删除</button>		  
+					    </div>					    
+					  </div>
+						</volist>
+					  <div class="form-group">	
+						 <label for="inputPassword3" class="col-sm-2 control-label">添加新幻灯片</label>
+					    <div class="col-sm-10">					     
+					    	 <input id="file-3" type="file" name="image[]" accept="image/*"  multiple=true>
+					    </div>
+					    
+					  </div>	
+					  <div class="form-group">
+					    <label for="inputPassword3" class="col-sm-3 control-label">代理协议URL地址</label>
+					    <div class="col-sm-8">
+					      <input type="text"  class="form-control" id="input4" name="daili_url" value="{$daili_info[0]['daili_url']}" placeholder="">
+					    </div>
+					  </div>
+					  <input type="hidden" name="daili_id" value="{$daili_info[0]['id']}">
+					    <div class="col-sm-offset-2 col-sm-10">
+					      <button type="submit" class="btn btn-default"> 保　存 </button>
+					    </div>
+					  
+					</form>
+				</div>
+		    </div>
+		   
+		    <div role="tabpanel" class="tab-pane" id="messages">
+		    	<h5 class="alert alert-success" style="padding:5px 10px;line-height:30px;">默认回复qr得到推广二维码　　<a href="{:U('imgtest')}" target="_blank"><div class="btn btn-danger">查看效果</div></a></h5>
+				<div class="well">
+					<form class="form-horizontal" action="{:U('qr')}" method="post" enctype="multipart/form-data"  >
+		    		<div class="form-group">
+					    <label for="inputPassword3" class="col-sm-2 control-label">背景图片</label>
+					    <div class="col-sm-9">
+					      <input type="text"  class="form-control" id="pic_url2" name="pic_url" value="{$qrset[0]['pic_url']}" placeholder="" readonly>				  
+					    </div>
+					    <div class="col-sm-1">
+					    	 <button type="button" onclick="yulan2()" class="btn btn-default">预览</button>
+					    </div>				    
+					</div>
+					<div class="form-group">	
+						 <label for="inputPassword3" class="col-sm-2 control-label">上传图片</label>
+					    <div class="col-sm-10">					     
+					    	 <input id="file-4" type="file" name="image1" accept="image/*"  multiple=true>
+							 <span style="color:red">上传封面图片为宽640px * 高900px</span>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputPassword3" class="col-sm-2 control-label">昵称大小</label>
+					    <div class="col-sm-10">
+					      <input type="text" class="form-control" id="input4" name="font_size" value="{$qrset[0]['font_size']}" placeholder="建议值35">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputPassword3" class="col-sm-2 control-label">昵称位置</label>
+					    <div class="col-sm-5">
+					      <input type="text" class="form-control" id="input4" name="font_x" value="{$qrset[0]['font_x']}" placeholder="建议值150">
+					    </div>
+					    <div class="col-sm-5">					  
+					      <input type="text" class="form-control" id="input4" name="font_y" value="{$qrset[0]['font_y']}" placeholder="建议值120">
+					    </div>
+					  </div>			 	 
+		    		 <div class="form-group">
+					    <label for="inputPassword3" class="col-sm-2 control-label">头像宽高</label>
+					    <div class="col-sm-10">
+					      <input type="text" class="form-control" id="input4" name="head_size" value="{$qrset[0]['head_size']}" placeholder="建议值100">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputPassword3" class="col-sm-2 control-label">头像位置</label>
+					    <div class="col-sm-5">
+					      <input type="text" class="form-control" id="input4" name="head_x" value="{$qrset[0]['head_x']}" placeholder="建议值50">
+					    </div>
+					    <div class="col-sm-5">					  
+					      <input type="text" class="form-control" id="input4" name="head_y" value="{$qrset[0]['head_y']}" placeholder="建议值30">
+					    </div>
+					  </div>					 
+					  <div class="form-group">
+					    <label for="inputPassword3" class="col-sm-2 control-label">二维码宽高</label>
+					    <div class="col-sm-10">
+					      <input type="text" class="form-control" id="input4" name="qr_size" value="{$qrset[0]['qr_size']}" placeholder="建议值250">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputPassword3" class="col-sm-2 control-label">二维码位置</label>
+					    <div class="col-sm-5">
+					      <input type="text" class="form-control" id="input4" name="qr_x" value="{$qrset[0]['qr_x']}" placeholder="建议值200">
+					    </div>
+					    <div class="col-sm-5">					  
+					      <input type="text" class="form-control" id="input4" name="qr_y" value="{$qrset[0]['qr_y']}" placeholder="建议值500">
+					    </div>
+					  </div>
+					  <input type="hidden" name="qr" value="{$qrset[0]['id']}" >
+					  <div class="form-group">
+					    <div class="col-sm-offset-2 col-sm-10">
+					      <button type="submit" class="btn btn-default"> 保　存 </button>
+					    </div>
+					  </div>
+					</form>
+				</div>
+		    </div>
+			
+		  </div>
+
+		</div>
+		
+	</div>
+</div>
+<style>
+.yulan img{width:100%}
+</style>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js"></script>
+
+
+<script src="__PUBLIC__/admin/js/area.js" type="text/javascript"></script>
+ <script src="__PUBLIC__/admin/js/fileinput.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/fileinput_locale_zh.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/layer/layer.js"></script>
+<script>
+
+	$('#myTabs a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+function yulan(obj){
+	var abc = $(obj).attr("class");
+ var url = $(obj).parent().prev().children().val();
+	var yulan = layer.open({
+		type: 1,
+		title: false,
+		//area: ['640px', '320px'],
+		closeBtn: true,
+		maxmin: true,
+		shadeClose: true,
+		skin: 'yulan',
+		content: '<img src="/'+url+'">'
+	});	//layer.full(yulan);
+}
+function yulan2(){
+	var url = $('#pic_url2').val();
+	if(url != '' ){
+		layer.open({
+			type: 1,
+			title: false,
+			area: ['320px', '450px'],
+			closeBtn: true,
+			maxmin: true,
+			shadeClose: true,
+			skin: 'yulan',
+			content: '<img src="/'+url+'">'
+		});	
+	}
+}
+function del(obj){
+	layer.confirm('确定要删除这条数据吗？', {
+	  btn: ['确定','取消'] //按钮
+	}, function(){
+	  var id = $(obj).attr("data");
+	$.ajax({
+		type: "POST",
+		url: "{:U('delbanner')}",
+		dataType: "json",
+		data: {"id":id},
+		success: function(json){
+			if(json.success==1){
+				$(obj).parent().parent().css("display",'none');
+			}else{
+				layer.msg("处理失败，请重新尝试");				
+			}
+		},
+		error:function(){
+			layer.msg("发生异常！");
+		}
+		
+	});
+	}, function(){
+	  
+	});
+	
+}
+$("#file-3").fileinput({
+			showUpload: false,
+			showCaption: false,
+			browseClass: "btn btn-default",
+			fileType: "any",
+	        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>"
+		});
+$("#file-4").fileinput({
+			showUpload: false,
+			showCaption: false,
+			browseClass: "btn btn-default",
+			fileType: "any",
+	        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>"
+		});	
+
+</script>

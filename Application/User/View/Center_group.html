@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<meta content="telephone=no" name="format-detection">
+    <title>家族谱</title>
+   <!--  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="__PUBLIC__/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/weui.min.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css"/>
+	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+	<script src="__PUBLIC__/js/slide.js"></script>
+	<script src="__PUBLIC__/js/base.js"></script>
+	<link rel="stylesheet" href="__PUBLIC__/css/slide.css">
+	<style>
+	.group-header{background:#FF6666;width:100%;}
+	.group-header .group{width:100%;color:#fff;text-align:center;padding:15px 0;font-size:16px;}
+	.group-header .group span{font-size:16px;color:yellow}
+	#list .group{width:33.3333%;text-align:center;padding:10px 0;font-size:12px;color:#999;}
+	#list .group img{border-radius:50%;width:100%;}
+	.weui_cell{font-size:14px;}
+	.weui_cells{padding-bottom:30px;}
+	.weui_cell:focus{background:#efedf1}
+	</style>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+wx.config({
+			debug: false,
+			appId: '<?php echo $signPackage["appId"];?>',
+			timestamp: <?php echo $signPackage["timestamp"];?>,
+			nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+			signature: '<?php echo $signPackage["signature"];?>',
+			jsApiList: [
+				// 所有要调用的 API 都要加到这个列表中
+				'checkJsApi',
+				'addCard',
+				'chooseCard',
+				'openCard',
+				'onMenuShareTimeline',
+				'onMenuShareAppMessage',
+				'closeWindow',
+				'hideOptionMenu',
+				'hideAllNonBaseMenuItem',
+				'menuItem:profile'
+			  ]
+		});
+wx.ready(function(){
+	wx.hideAllNonBaseMenuItem();//alert('<?php echo $paysign["timeStamp"];?>');
+});
+</script>
+</head>
+<body  style="background: #efedf1;margin-bottom:70px;">
+	<div class="group-header">
+		<div class="left group" data-id="group1" style="background:-webkit-gradient(linear, 0% 0%, 100% 100%, from(#E25B5B), to(#862525));">
+		<div>家族拓扑图</div><div class="icon-sitemap icon-2x"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	
+	<div class="weui_cells">
+		<div class="weui_cells_title">家族成员树状图<font size="1.5">[名字变红表示已取关]</font></div>
+		<div id="list"></div>
+	</div>
+	
+</body>
+<script>
+getpage({$state});
+	function getpage(state){
+//var sn = $('#order_sn').val();//alert(sn);
+	$('#list').html('<div style="text-align:center;margin-top:30px;"><img src="__PUBLIC__/admin/images/loading.gif" width="50px" ></div>');
+	$("#list").load(
+		"{:U('group_ajax')}?state="+state,
+		function() {}
+	);
+}
+function reload(state,type){
+
+$('#reload'+state).html('<div style="text-align:center;margin-top:30px;"><img src="__PUBLIC__/admin/images/loading.gif" width="50px" ></div>');
+$("#reload"+state).load(
+	"{:U('group_ajax')}?state="+state+"&type="+type,
+		function() {loadingclose();$("#reload"+state).attr("id","");}
+	);
+	
+}
+</script>
+</html>

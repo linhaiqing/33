@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>
+      收货地址
+    </title>
+    <!-- <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="__PUBLIC__/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/weui.min.css">
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js">
+    </script>
+    <script>
+      function addr() {
+        localStorage.setItem("key", 1);
+        WeixinJSBridge.invoke('editAddress', {
+          "appId": "<?php echo $editAddress[appid];?>",
+          "scope": "jsapi_address",
+          "signType": "sha1",
+          "addrSign": "<?php echo $editAddress[addrSign];?>",
+          "timeStamp": "<?php echo $editAddress[timestamp];?>",
+          "nonceStr": "<?php echo $editAddress[noncestr];?>",
+        },
+        function(res) {
+          if (res.err_msg == "edit_address:ok") {
+            var address = res.proviceFirstStageName + res.addressCitySecondStageName + res.addressCountiesThirdStageName + res.addressDetailInfo;
+            var username = res.userName;
+            var tel = res.telNumber;
+            $.ajax({
+              type: "POST",
+              url: "{:U('Index/save_address')}",
+              dataType: "json",
+              data: {
+                "username": username,
+                'address': address,
+                "telphone": tel
+              },
+              success: function(data) {
+
+                location.href = "{:U('Index/categrey')}";
+
+              },
+              error: function() {
+                alert('发生通信错误，请稍候重试');
+              }
+            });
+          } else {
+            //alert("您选择了取消，请重新选择");
+            location.href = "{:U('Index/categrey')}";
+          }
+
+        });
+
+      }
+    </script>
+  </head>
+  
+  <body style="background:#efedf1">
+    <div class="container-fulid" style="background:;padding-bottom:20px;">
+      <div class="bd">
+        <div class="weui_panel weui_panel_access" style="background:#;">
+          <div class="weui_panel_hd" style="color:#555">
+            修改收货地址
+          </div>
+          <div class="weui_panel_bd">
+            <a href="javascript:void(0);" onclick="addr()" class="weui_media_box weui_media_appmsg">
+              <div class="weui_media_hd">
+                <span class="icon-plus-sign icon-3x" style="color:#555">
+                </span>
+              </div>
+              <div class="weui_media_bd">
+                <h4 class="weui_media_title" style="margin-top:-15px;font-size:16px;color:#555">
+                  点击修改收货地址
+                </h4>
+                <p class="weui_media_desc">
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <i class="icon-spinner icon-spin"></i> Spinner icon when loading content... -->
+  </body>
+  <script src="__PUBLIC__/admin/layer/layer.js">
+  </script>
+  <script>
+    function check() {
+      var a = 1;
+      $("input").each(function() {
+        if ($(this).val() == '') {
+          a = 0;
+        }
+      });
+      if (a == 0) {
+        layer.msg('收获信息不能为空', {
+          icon: 4
+        });
+        return false;
+      }
+    }
+  </script>
+
+</html>

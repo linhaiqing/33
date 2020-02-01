@@ -1,0 +1,116 @@
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/base.css">
+<link href="__PUBLIC__/admin/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+<div class="container-fluid main">
+	<div class="main-top"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>红包专区</div>
+	<div class="main-content">
+
+		<div>
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+		    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">发放列表</a></li>		    
+		  </ul>
+		  
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+		    <div role="tabpanel" class="tab-pane active" id="home">
+				<div class="alert alert-success" style="padding:5px 10px;margin:15px 0;line-height:30px;">
+					<div class="col-lg-3 col-md-3" style="padding:0;margin:3px;">
+						<div class="input-group input-group">
+						  <span class="input-group-addon" id="sizing-addon1">购买人ID</span>
+						  <input type="text" class="form-control" name="from_user_id" id="from_user_id" placeholder="输入会员ID查询" aria-describedby="sizing-addon1">
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-3" style="padding:0;margin:3px;">
+						<div class="input-group input-group">
+						  <span class="input-group-addon" id="sizing-addon1">接包人ID</span>
+						  <input type="text" class="form-control" name="user_id" id="user_id" placeholder="输入会员ID查询" aria-describedby="sizing-addon1">
+						</div>
+					</div>
+					<div class="col-lg-2 col-md-2" style="padding:0;margin:3px;">
+						<div class="input-group input-group">
+						  <input class="btn btn-default" type="submit" value="搜索" onclick="getpage(1)">
+						</div>
+					</div>
+					 <div class="clearfix visible-xs-block"></div><div style="clear:both"></div>
+				</div>
+				<div id="list">
+				</div>
+		    </div>
+		  </div>
+		</div>
+		
+	</div>
+</div>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js"></script>
+
+<script src="__PUBLIC__/admin/js/fileinput.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/fileinput_locale_zh.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/layer/layer.js"></script>
+<script>
+getpage(1);
+	$('#myTabs a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+function getpage(p){
+var from_user_id = $('#from_user_id').val();//alert(sn);
+var user_id = $('#user_id').val();//alert(sn);
+	$('#list').html('<div style="text-align:center;margin-top:30px;"><img src="__PUBLIC__/admin/images/loading.gif" width="60px" ></div>');
+	$("#list").load(
+		"{:U('hongbao_ajax')}?from_user_id="+from_user_id+"&p="+p+"&user_id="+user_id,
+		function() {}
+	);
+}
+function more(user_id){
+	$.ajax({
+		type: "POST",
+		url: "{:U('get_address')}?time="+new Date(),
+		dataType: "json",
+		data: {
+			"id":user_id,
+		},
+		success: function(json){
+			layer.open({
+				type: 1,
+				skin: 'layui-layer-rim', //加上边框
+				area: ['420px', '240px'], //宽高
+				content: json.info
+			});
+		},
+		error:function(){
+			layer.msg("发生通信错误");
+		}
+	});
+	
+}
+function del(obj,id){
+	//alert(id);
+	layer.confirm('删除后无法恢复，确认删除吗', {
+		btn: ['确认','取消'] //按钮
+	}, function(){
+		$.ajax({
+			type: "POST",
+			url: "{:U('del')}?time="+new Date(),
+			dataType: "json",
+			data: {
+				"id":id,
+			},
+			success: function(json){
+				layer.msg("删除成功");
+				var td = $(obj).parent();//alert(a);
+				td.parent().css("display","none");	
+			},
+			error:function(){	
+			}
+		});
+	}, function(){
+		
+	});
+	
+	
+}
+
+</script>

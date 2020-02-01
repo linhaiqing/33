@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>订单支付</title>
+	<link rel="stylesheet" href="__PUBLIC__/css/weui.min.css">
+	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<body style=""><include file="./Application/Shop/View/Index_wxjs.html" />
+<div class="bd">
+	<div class="weui_panel weui_panel_access">
+		<div class="weui_panel_hd">订单商品详情</div>
+		<div class="weui_panel_bd">
+			<volist name="order_info" id="vv">
+			<a href="javascript:void(0);" class="weui_media_box weui_media_appmsg" style="padding-top:5px;padding-bottom:5px;">
+				<div class="weui_media_hd">
+					<img class="weui_media_appmsg_thumb" src="/{$vv.pic_url}" alt="">
+				</div>
+				<div class="weui_media_bd">
+					<h4 class="weui_media_title" style="font-size:16px;">{$vv.good_name}</h4>
+					<p class="weui_media_desc">商品数量：{$vv.good_num}</p>
+				</div>
+			</a>
+			</volist>
+			<a class="weui_panel_ft" href="javascript:void(0);">订单总金额：￥{$total_fee}元</a>
+		</div>
+	</div>
+	<br />
+	<a href="javascript:;" class="weui_btn weui_btn_primary" style="width:80%;" onclick="onBridgeReady()">微信安全支付</a>
+		<a href="javascript:;" class="weui_btn weui_btn_default" style="width:80%;" onclick="morepay()">其它付款方式</a>
+</div>	
+</body>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="__PUBLIC__/layer-mobile/layer.js"></script>
+<script>
+wx.config({
+			debug: false,
+			appId: '<?php echo $signPackage["appId"];?>',
+			timestamp: <?php echo $signPackage["timestamp"];?>,
+			nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+			signature: '<?php echo $signPackage["signature"];?>',
+			jsApiList: [
+				// 所有要调用的 API 都要加到这个列表中
+				'checkJsApi',
+				'addCard',
+				'chooseCard',
+				'openCard',
+				'onMenuShareTimeline',
+				'onMenuShareAppMessage',
+				'closeWindow',
+				'hideOptionMenu',
+				'hideAllNonBaseMenuItem',
+				'menuItem:profile'
+			  ]
+		});
+wx.ready(function(){
+	wx.hideAllNonBaseMenuItem();//alert('<?php echo $paysign["timeStamp"];?>');
+	if (typeof WeixinJSBridge == "undefined"){
+	   if( document.addEventListener ){
+		   document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+	   }else if (document.attachEvent){
+		   document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+		   document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+	   }
+	}else{
+	  // onBridgeReady();
+	}
+});
+function morepay(){
+	layer.open({content: '暂未开放，请等待', time: 3});
+}
+function onBridgeReady(){
+   WeixinJSBridge.invoke(
+       'getBrandWCPayRequest',{"appId" : '<?php echo $paysign["appid"];?>',
+           "timeStamp":'<?php echo $paysign["timeStamp"];?>',
+           "nonceStr" : '<?php echo $paysign["nonceStr"];?>',
+           "package" : 'prepay_id=<?php echo $paysign["prepay_id"];?>',
+           "signType" :"MD5",
+           "paySign" : '<?php echo $paysign["paySign"];?>', //微信签名 
+       },
+       function(res){
+           if(res.err_msg == "get_brand_wcpay_request：ok" ) {
+				alert("支付成功");
+		   }else{
+			//wx.closeWindow();//history.go(-1);
+			wx.closeWindow();
+		   } 
+       }
+   ); 
+}
+
+</script>
+</html>

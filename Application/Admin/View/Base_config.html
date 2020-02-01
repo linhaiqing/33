@@ -1,0 +1,107 @@
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/base.css">
+<link href="__PUBLIC__/admin/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+<style>.btn-default{background:#44b549;color:#fff;}</style>
+<div class="container-fluid main">
+	<div class="main-top"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>微信参数设置</div>
+	<div class="main-content well"  style="margin-top:30px;border:1px solid #dddddd;padding:10px 2%;">
+		<form class="form-horizontal" action="__SELF__" method="post" enctype="multipart/form-data" >
+		 <div class="form-group">
+			<label class="col-sm-2 control-label" for="exampleInputEmail1">微信名称</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" name="wxname" value="{$info.wxname}" id="" placeholder="">
+			</div>
+			
+		 </div>
+		 <div class="form-group">
+			<label class="col-sm-2 control-label" for="exampleInputEmail1">微信号</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" name="wxid" value="{$info.wxid}" id="" placeholder="">
+			</div>
+			
+		 </div>
+		 <div class="form-group">
+			<label class="col-sm-2 control-label" for="exampleInputEmail1">微信APPID</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" name="appid" value="{$info.appid}" id="" placeholder="">
+			</div>
+			
+		 </div>
+		 <div class="form-group">
+			<label class="col-sm-2 control-label" for="exampleInputEmail1">微信APPSECRET</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" name="appsecret" value="{$info.appsecret}" id="" placeholder="">
+			</div>
+			
+		 </div>
+		 <div class="form-group">
+			<label class="col-sm-2 control-label" for="exampleInputEmail1">微信商户平台ID</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" name="machid" value="{$info.machid}" id="" placeholder="">
+			</div>
+			
+		 </div>
+		 <div class="form-group">
+			<label class="col-sm-2 control-label" for="exampleInputEmail1">商户平台密钥mkey</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" name="mkey" value="{$info.mkey}" id="" placeholder="">
+			</div>
+			
+		 </div>
+		 <div class="form-group">
+			<label class="col-sm-12 text-left"  for="inputEmail3"> 上传证书</label>
+			<div class="col-sm-4">
+				<input type="file" id="file1" class="form-control" id="" name="file1" value="{$info[0]['']}" placeholder="" >
+				<span id="" class="help-block">上传apiclient_cert.pem</span>
+			</div>
+			<div class="col-sm-4">
+				<input type="file" id="file2" class="form-control" id="" name="file2" value="{$info[0]['']}" placeholder="" >
+				<span id="" class="help-block">上传apiclient_key.pem</span>
+			</div>
+			<div class="col-sm-4">
+				<input type="file" id="file3" class="form-control" id="" name="file3" value="{$info[0]['']}" placeholder="" >
+				<span id="" class="help-block">上传rootca.pem</span>
+			</div>					
+		</div><div style="clear:both"></div>
+		<div class="form-group">
+			<label for="inputEmail3" class="col-sm-12">证书在商户平台和微信支付开通邮件中都可下载，若证书已上传，无需重复上传</label>
+		</div>
+		<div style="clear:both"></div>
+		
+		  <button type="submit" class="btn btn-default">保存</button>
+		 
+		</form>
+	</div>
+</div>
+<style>
+.ccca{font-size: 18px;color:#00a2e8}
+</style>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/admin/js/fileinput.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/fileinput_locale_zh.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/layer/layer.js"></script>
+<script>
+$("#file1").fileinput({
+	showUpload: false,
+	showCaption: false,
+	browseClass: "btn btn-default",
+	fileType: "any",
+	previewFileIcon: "<i class='glyphicon glyphicon-king'></i>"
+});
+$("#file2").fileinput({
+	showUpload: false,
+	showCaption: false,
+	browseClass: "btn btn-default",
+	fileType: "any",
+	previewFileIcon: "<i class='glyphicon glyphicon-king'></i>"
+});
+$("#file3").fileinput({
+	showUpload: false,
+	showCaption: false,
+	browseClass: "btn btn-default",
+	fileType: "any",
+	previewFileIcon: "<i class='glyphicon glyphicon-king'></i>"
+});
+</script>

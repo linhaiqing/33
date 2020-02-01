@@ -1,0 +1,21 @@
+
+<div class="weui_cells_title">红包列表</div>
+<volist name="first_info" id="vv" empty="$empty" alt="1">
+<div class="weui_cell">
+	<div class="weui_cell_hd" style="border-left:4px solid #ff6666;"><img src="{$vv.headimgurl}" alt="" style="height:60px;width:5px;margin-right:5px;display:block"></div>
+	<div class="weui_cell_bd weui_cell_primary">
+		<p style="white-space: nowrap;text-overflow:ellipsis;overflow:hidden;">会员：{$vv.nickname}</p>
+		<p style="white-space: nowrap;text-overflow:ellipsis;overflow:hidden;">缘由：参与团购奖励金额</p>
+		<p style="white-space: nowrap;text-overflow:ellipsis;overflow:hidden;">金额：{$vv.money}元</p>
+	</div>
+	<if condition="$vv.is_true eq 1">
+	<div class="weui_cell_ft weui_btn weui_btn_mini  weui_btn_plain_default" style="color:#999;border:1px solid #999;">已领取</div>
+	<else />
+	<div class="weui_cell_ft weui_btn weui_btn_mini  weui_btn_plain_default" style="color:red;border:1px solid red;" onclick="send(this,'{$vv.id}','{$vv.nickname}参与团购奖励金额{$vv.money}元')">点击领取</div>
+	</if>
+</div>
+</volist>
+<div class="pagelist">{$page}</div>
+<script>
+
+</script>

@@ -1,0 +1,56 @@
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/base.css">
+<link href="__PUBLIC__/admin/css/jquery.minicolors.css" rel="stylesheet" type="text/css" />
+<div class="container-fluid main">
+	<div class="main-top"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>分销管理</div>
+	<div class="main-content">
+<style>
+.table tr td{font-size:12px;vertical-align:middle;}
+.form-control{font-size:8px;}
+</style>
+		<div>
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+		    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">提现记录</a></li>		    
+		  </ul>
+		  
+		  <!-- Tab panes -->
+		  <!-- 模板编号	模板名	回复内容	头部颜色	文字颜色	状态	模板ID -->
+		  <div class="tab-content">
+		    <div role="tabpanel" class="tab-pane active" id="home">
+				<div class="alert alert-success" style="padding:5px 10px;margin:15px 0;line-height:30px;">
+					商城分佣明目，按总收入由高到低排序，只显示代理商会员相关信息
+				</div>
+				<div class="well">
+				<div id="list"></div>
+				</div>
+				
+				
+		    </div>
+		  </div>
+		</div>
+		
+	</div>
+</div>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/admin/layer/layer.js"></script>
+<script src="__PUBLIC__/admin/js/jquery.minicolors.min.js" type="text/javascript"></script>
+<script>
+	$('#myTabs a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+$(document).ready(function(){
+	getpage(1);
+});
+function getpage(p){
+	$('#list').html('<div style="text-align:center;margin-top:30px;"><img src="__PUBLIC__/admin/images/loading.gif" width="60px" ></div>');
+	$("#list").load(
+		"{:U('broke_ajax')}?p="+p,
+		function() {}
+	);
+}
+
+</script>

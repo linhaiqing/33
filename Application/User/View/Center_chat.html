@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<meta content="telephone=no" name="format-detection">
+    <title>{$to_userinfo.nickname}</title>
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/weui.min.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css"/>
+	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+	<script src="//cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/admin/layer/layer.js"></script>
+	<script src="__PUBLIC__/js/base.js"></script>
+	<link rel="stylesheet" href="__PUBLIC__/css/slide.css">
+	<style>
+	.chat{margin:8px 0;}
+	.chat_footer{position:fixed;bottom:0;width:100%;height:50px;background:#f7f7fa;padding:5px 0;}
+	.add_footer{position:fixed;top:0;}
+	.chat img{max-width:40px;}
+	</style>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+wx.config({
+			debug: false,
+			appId: '<?php echo $signPackage["appId"];?>',
+			timestamp: <?php echo $signPackage["timestamp"];?>,
+			nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+			signature: '<?php echo $signPackage["signature"];?>',
+			jsApiList: [
+				// 所有要调用的 API 都要加到这个列表中
+				'checkJsApi',
+				'addCard',
+				'chooseCard',
+				'openCard',
+				'onMenuShareTimeline',
+				'onMenuShareAppMessage',
+				'closeWindow',
+				'hideOptionMenu',
+				'hideAllNonBaseMenuItem',
+				'menuItem:profile'
+			  ]
+		});
+wx.ready(function(){
+	wx.hideAllNonBaseMenuItem();//alert('<?php echo $paysign["timeStamp"];?>');  
+});
+</script>
+</head>
+<body  style="background: rgba(0,0,0,0.6);margin-bottom:70px;text-align:center;">
+	<audio id="audio" src="__PUBLIC__/chat.mp3" preload="auto" style="display:none;"></audio>
+	<div id="content" style="padding-top:10px;">
+		<div style="color:#ff6666;width:90%;margin:0 auto;font-size:12px;">系统通知：给好友发的第一条聊天内容，系统会以服务通知形式传送给对方，激活聊天，限每天首条</div>
+		<volist name="chat_record" id="vv">
+		<div style="color:#f8f8f8;font-size:10px;">{$vv.time}</div>
+		<if condition="$vv['from_user_id'] eq $to_userinfo['user_id'] ">
+		<div class="chat">
+			<div class="col-sm-2 col-xs-2" style="padding:0;"><img src="{$to_userinfo.headimgurl}" width="90%"></div>
+			<div class="col-sm-2 col-xs-8" style="padding:0;padding-left:5px;">
+				<div class="left" style="padding:8px 10px;background:#fff;border-radius:5px;text-align:left;" data="{$vv.time}">
+				{$vv.text}
+				</div>
+			
+			</div>
+			<div class="clear"></div>
+		</div>
+		<else />
+		<div class="chat">
+			<div class="col-sm-1 col-xs-2"></div>
+			<div class="col-sm-2 col-xs-8" style="padding:0;padding-right:5px;">
+				<div class="right" style="padding:8px 10px;background:#98e165;border-radius:5px;text-align:left;" data="{$vv.time}">
+				{$vv.text}
+				</div>
+			</div>
+			<div class="col-sm-2 col-xs-2" style="padding:0;"><img src="{$headimgurl}" width="90%"></div>
+			<div class="clear"></div>
+		</div>
+		</if>
+		
+		</volist>
+		
+		
+	</div>
+	<a name="chat"></a>
+	<!--底部输入组件-->
+	<div class="chat_footer">
+       <div class="col-sm-1 col-xs-1" style="padding:4px 0;color:#ff6666">
+		<i class="icon-comment icon-2x"></i>
+	   </div>
+       <div class="col-sm-9 col-xs-8" style="padding:0;">
+		<textarea class="form-control" id="text" style="height:40px;" rows="1"></textarea>
+	   </div>
+       <div class="col-sm-2 col-xs-3" style="padding:2px 0;" >
+		<button class="weui_btn weui_btn_mini weui_btn_primary" id="enter" style="background:#ff6666;height:36px;width:70px;">发送</button>
+	   </div>
+	</div>
+</body>
+<script>
+var audio = $("#audio")[0]; 
+$(document).ready(function(){
+	 $('#content').scrollTop( $('#content')[0].scrollHeight ); 
+	$('#text').focus(function(){$('.chat_footer').addClass('add_footer');});
+	$('#text').blur(function(){$('.chat_footer').removeClass('add_footer');});
+	var to_user_id = '{$to_userinfo.user_id}';
+	//刷新新聊天数据
+	get_content(to_user_id);
+	setInterval(function(){get_content(to_user_id);},2000);
+	$('#enter').click(function(){
+		$('.chat_footer').removeClass('add_footer');
+		var text = $('#text').val();
+		if(text == ''){exit;}
+		//加入到聊天会话,清空输入内容
+		var date = new Date();
+		var t = date.getHours() + ':'+date.getMinutes() + ':'+date.getSeconds();
+		$('#content').append(chat_self(text,t));$('#text').val('');
+		//将聊天内容上传到服务端处理
+		$.ajax({
+			type:'post',
+			url:"{:U('chat_send')}",
+			dataType:'json',
+			data:{'text':text,'to_user_id':to_user_id},
+			success:function(json){
+				//$('#content').append(chat_send(json.text));
+			},
+			error:function(){
+				//alert('error');
+			}
+		
+		});
+	});
+});	
+$('.left,.right').on('click',function(){
+	var time = $(this).attr('data');
+	layer.tips('推送时间：'+time, this, {
+		tips: [1, '#ff9900'] //还可配置颜色
+	});
+});
+function get_content(to_user_id){
+	$.ajax({
+		type:'post',
+		url:"{:U('chat_get')}?date="+new Date(),
+		dataType:'json',
+		data:{'from_user_id':to_user_id},
+		success:function(json){
+			if(json.success == 1){
+				audio.play();$('#content').scrollTop( $('#content')[0].scrollHeight ); 
+				$('#content').append(chat_send(json.text,json.time));
+			}
+			
+		},
+		error:function(){
+			//alert('error');
+		}
+	});
+}
+function chat_self(str,t){
+	var html = '<div style="color:#f8f8f8;font-size:10px;">'+t+'</div><div class="chat"><div class="col-sm-1 col-xs-2"></div><div class="col-sm-2 col-xs-8" style="padding:0;padding-right:5px;"><div class="right" style="padding:8px 10px;background:#98e165;border-radius:5px;text-align:left;">'+str+'</div></div><div class="col-sm-2 col-xs-2" style="padding:0;"><img src="{$headimgurl}" width="90%"></div><div class="clear"></div></div>';
+	return html;
+}
+function chat_send(str,t){
+	var html = '<div style="color:#f8f8f8;font-size:10px;">'+t+'</div><div class="chat"><div class="col-sm-2 col-xs-2" style="padding:0;"><img src="{$to_userinfo.headimgurl}" width="90%"></div><div class="col-sm-2 col-xs-8" style="padding:0;padding-left:5px;"><div class="left" style="padding:8px 10px;background:#fff;border-radius:5px;text-align:left;">'+str+'</div></div><div class="clear"></div></div>';
+	return html;
+}
+</script>
+</html>

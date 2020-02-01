@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<meta content="telephone=no" name="format-detection">
+    <title>奖励红包雨</title>
+   <!--  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="__PUBLIC__/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/weui.min.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css"/>
+	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+	<script src="__PUBLIC__/js/slide.js"></script>
+	<script src="__PUBLIC__/js/base.js"></script>
+	<link rel="stylesheet" href="__PUBLIC__/css/slide.css">
+	<style>
+	.group-header{background:#FF6666;width:100%;}
+	.group-header .group{width:100%;color:#fff;text-align:center;padding:10px 0;font-size:14px;}
+	.group-header .group span{font-size:16px;color:yellow}
+	.weui_cell{font-size:14px;}
+	</style>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+wx.config({
+			debug: false,
+			appId: '<?php echo $signPackage["appId"];?>',
+			timestamp: <?php echo $signPackage["timestamp"];?>,
+			nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+			signature: '<?php echo $signPackage["signature"];?>',
+			jsApiList: [
+				// 所有要调用的 API 都要加到这个列表中
+				'checkJsApi',
+				'addCard',
+				'chooseCard',
+				'openCard',
+				'onMenuShareTimeline',
+				'onMenuShareAppMessage',
+				'closeWindow',
+				'hideOptionMenu',
+				'hideAllNonBaseMenuItem',
+				'menuItem:profile'
+			  ]
+		});
+wx.ready(function(){
+	wx.hideAllNonBaseMenuItem();//alert('<?php echo $paysign["timeStamp"];?>');
+});
+</script>
+</head>
+<body  style="background: #efedf1;margin-bottom:70px;">
+	<div class="group-header">
+		<div class="left group" data-id="1" style="background:#E25B5B"><div>直推奖励红包</div><div class="icon-envelope icon-2x"></div><div style="margin-top:2px"><span>{$first_num}</span>个</div></div>
+		<div class="clear"></div>
+	</div>
+	
+	<div class="weui_cells"  id="group">
+	</div>
+	
+</body>
+<script>
+var type = 1;
+getpage(1);
+function getpage(p){
+$('#group').html('<div style="text-align:center;margin:0 auto;width:15%;margin-top:30px;margin-bottom:30px;"><img src="__PUBLIC__/admin/images/loading.gif" width="100%" ></div>');
+$("#group").load(
+		"{:U('zthongbao_ajax')}?p="+p+"&type="+type,
+		function() {}
+	);
+}
+
+</script>
+<script>
+	function send(obj,id,wish){
+		loading("正在请求");
+		$.ajax({
+			type: "POST",
+			url: "{:U('send_zthongbao')}",
+			dataType: "json",
+			data: {"wish":wish,"id":id},
+			success: function(json){
+				if(json.success==1){
+					dialog2("红包发放成功！");send_over(obj);
+				}else if(json.success==2){
+					dialog2(json.info);loadingclose();
+				}else{
+					 dialog2(json.err_info);loadingclose();	
+				}
+			},
+			error:function(){
+				 dialog2("发生异常！");loadingclose();
+			}
+		});	
+	}
+	function send_over(obj){
+		$(obj).css("color","#999");
+		$(obj).css("border","1px solid #999");
+		$(obj).attr("onclick","");
+		$(obj).text("已领取");
+		loadingclose();
+	}
+</script>
+
+</html>

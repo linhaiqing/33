@@ -1,0 +1,28 @@
+<div id="list">
+				<table class="table table-bordered table-hover" style="font-size:14px;">
+					<th>昵称</th>
+					<th>用户ID</th>
+					<th>头像</th>
+					<th>地区</th>
+					<th>代理级别</th>
+					<th>关注时间</th>
+					<th>关注状态</th>
+					<th>操作</th>
+					<volist name="info" id="vv" key="kk">
+					<tr id="{$kk}" style="font-size:13px;">
+						<td>{$vv.nickname}</td>
+						<td>{$vv.user_id}</td>
+						<td><img src="{$vv.headimgurl}" width="30px"></td>
+						<td>{$vv.country}.{$vv.province}.{$vv.city}</td>
+						<td>{$vv.agent}</td>
+						<td>{$vv.subscribe_time}</td>
+						<td><if condition="$vv.subscribe eq 1 ">关注<else />取消关注</if></td>
+						<td>
+						<a href="{:U('contact')}?user_id={$vv.user_id}"><button class="btn btn-default">族谱</button></a>
+						<button class="btn btn-default" onclick="del(this,{$vv.user_id})">删除</button>
+						</td>
+					</tr>
+					</volist>
+				</table>
+				<div class="pagelist">{$page}</div>
+				</div>

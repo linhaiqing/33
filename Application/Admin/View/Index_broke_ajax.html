@@ -1,0 +1,17 @@
+<table class="table table-bordered table-hover" style="font-size:14px;">
+<th>用户ID</th>
+<th>用户名</th>
+<th>佣金余额</th>
+<th>提出金额</th>
+<th>总收益</th>
+<volist name="broke_info" id="vv">
+<tr>
+	<td>{$vv.user_id}</td>
+	<td>{$vv.nickname}</td>
+	<td>￥{$vv.shop_income}</td>
+	<td>￥{$vv.shop_outcome}</td>
+	<td>￥{$vv.shop_come}</td>
+</tr>
+</volist>
+</table>
+<div class="pagelist">{$page}</div>

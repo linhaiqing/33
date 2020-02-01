@@ -1,0 +1,82 @@
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/base.css">
+<link href="__PUBLIC__/admin/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+<div class="container-fluid main">
+	<div class="main-top"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>个人设置</div>
+	<div class="main-content">
+		<form class="form-horizontal" action="__SELF__" method="post" onsubmit="return check()">
+			<h5 class="alert alert-danger" style="padding:5px 10px;line-height:30px;">您最近一次登录平台是【{$info[0]['last_time']}】，请确定是否本人操作，如非本人操作请及时修改密码</h5>
+			<div class="form-group">
+				<label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" id="" name="username" value="{$info[0]['username']}" readonly placeholder="">
+					<span id="" class="help-block" style="color:red"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail3" class="col-sm-2 control-label">手机号码</label>
+				<div class="col-sm-6">
+					<input type="tel" class="form-control" id="input1" name="phone" value="{$info[0]['phone']}" placeholder="">
+					<span id="" class="help-block" style="color:red"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail3" class="col-sm-2 control-label">邮箱地址</label>
+				<div class="col-sm-6">
+					<input type="email" class="form-control" id="input2" name="email" value="{$info[0]['email']}" placeholder="">
+					<span id="" class="help-block">用于找回密码</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="inputEmail3" class="col-sm-2 control-label">新密码</label>
+				<div class="col-sm-6">
+					<input type="password" class="form-control" id="input3" name="pwd1" value="" placeholder="******">
+					<span id="" class="help-block">修改密码填写，否则留空</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail3" class="col-sm-2 control-label">确认密码</label>
+				<div class="col-sm-6">
+					<input type="password" class="form-control" id="input4" name="pwd2" value="" placeholder="******">
+					<span id="notice" class="help-block" style="color:red"></span>
+				</div>
+			</div>	
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+				   <button type="submit" class="btn btn-default">确认保存</button>
+				</div>
+			 </div>
+		</form>
+	</div>
+</div>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/admin/layer/layer.js"></script>
+<script>
+	function check(){		
+		if($('#input1').val()==""){
+			layer.msg("手机号码不能为空");
+			return false;
+		}
+		if(!$("#input1").val().match(/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/)){
+			layer.msg("手机号码填写错误");
+			return false;
+		}
+		if($('#input2').val()==""){
+			layer.msg("邮箱地址不能为空");
+			return false;
+		}
+		if($('#input3').val() !="" ){
+			if($('#input3').val() != $('#input4').val() ){
+				$('#notice').text('两次输入密码不一致！');
+				return false;
+			}else{
+				$('#notice').text('');
+			}
+			
+		}
+	}
+
+</script>

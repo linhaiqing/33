@@ -1,0 +1,28 @@
+
+<volist name="info" id="vv" empty="$empty">
+<div class="weui_media_box weui_media_text">
+	<h4 class="weui_media_title" style="font-size:14px;white-space: normal;">{$vv.title}</h4>
+	<div class="desc weui_media_desc">
+	<if condition="$vv.content eq '' "><span style="color:red">等待客服处理，请稍候</span><else />{$vv.content}</if>
+	</div>
+	<ul class="weui_media_info" style="color:#777">
+		<li class="weui_media_info_meta">{$vv.nickname}</li>
+		<li class="weui_media_info_meta weui_media_info_meta_extra">{$vv.time}</li>
+	</ul>
+</div>
+</volist>
+<div class="pagelist">{$page}</div>
+<script>
+$('.weui_panel_bd .weui_media_box .desc').on('click',function(){
+	var str = $(this).attr('class');
+	if(str.indexOf('weui_media_desc') == -1){
+		$(this).addClass('weui_media_desc');
+	}else{
+		$('.weui_panel_bd .weui_media_box .desc').each(function(){
+			$(this).addClass('weui_media_desc');
+		});
+		$(this).removeClass('weui_media_desc');
+	}
+	
+});
+</script>

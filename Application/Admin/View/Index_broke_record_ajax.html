@@ -1,0 +1,15 @@
+<table class="table table-bordered table-hover" style="font-size:14px;">
+	<th>用户ID</th>
+	<th>用户名</th>
+	<th>描述</th>
+	<th>提现时间</th>
+	<volist name="broke_info" id="vv">
+	<tr>
+		<td>{$vv.user_id}</td>
+		<td>{$vv.nickname}</td>
+		<td>{$vv.desc}￥{$vv.fee}</td>
+		<td>{$vv.time}</td>
+	</tr>
+	</volist>
+</table>
+<div class="pagelist">{$page}</div>

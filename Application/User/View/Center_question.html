@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<meta content="telephone=no" name="format-detection">
+    <title>常见问题</title>
+   <!--  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="__PUBLIC__/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/weui.min.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css"/>
+	<script src="//cdn.bootcss.com/jquery/2.2.1/jquery.js"></script>
+	<script src="__PUBLIC__/js/slide.js"></script>
+	<script src="__PUBLIC__/admin/layer/layer.js"></script>
+	<script src="__PUBLIC__/js/base.js"></script>
+	<link rel="stylesheet" href="__PUBLIC__/css/slide.css">
+	<style>
+	.group-header{background:#666f76;width:100%;}
+	.group-header .group{width:33.3%;color:#fff;text-align:center;padding:20px 0 0 0;}
+	.weui_cell{font-size:14px;}
+	.desc{color:#fff;font-size:14px;background:#ff6666;border-radius:5px;padding:6px;}
+	.bd img{display:block;width:100%;}
+	.weui_media_desc{white-space: nowrap;text-overflow:ellipsis;overflow:hidden;width:90%;margin:0 auto;max-height:26px;font-size:14px;border:1px dashed #ff6666;background:#fff;padding:6px 8px;}
+	.weui_media_title1 {
+    font-weight: 400;
+    font-size: 17px;
+    width: auto;}
+	.span{background:#ff6666;color:#fff;display:inline-block;padding:0 3px;}
+	</style>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+wx.config({
+			debug: false,
+			appId: '<?php echo $signPackage["appId"];?>',
+			timestamp: <?php echo $signPackage["timestamp"];?>,
+			nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+			signature: '<?php echo $signPackage["signature"];?>',
+			jsApiList: [
+				// 所有要调用的 API 都要加到这个列表中
+				'checkJsApi',
+				'addCard',
+				'chooseCard',
+				'openCard',
+				'onMenuShareTimeline',
+				'onMenuShareAppMessage',
+				'closeWindow',
+				'hideOptionMenu',
+				'hideAllNonBaseMenuItem',
+				'menuItem:profile'
+			  ]
+		});
+wx.ready(function(){
+	wx.hideAllNonBaseMenuItem();//alert('<?php echo $paysign["timeStamp"];?>');
+	layer.tips('点击对应问题可以查看完整解答哦~', '.weui_media_desc', {
+		tips: [3, '#ff6666'] //还可配置颜色
+	});
+});
+</script>
+</head>
+<body  style="background: #efedf1;margin-bottom:70px;">
+	<div class="bd">
+        <div class="weui_search_bar " id="search_bar">
+            <form class="weui_search_outer" action="#" method="post" onsubmit="return search()">
+                <div class="weui_search_inner">
+                    <i class="weui_icon_search"></i>
+                    <input type="search" class="weui_search_input" id="search_input" placeholder="搜索" required="">
+                    <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
+                </div>
+                <label for="search_input" class="weui_search_text" id="search_text">
+                    <i class="weui_icon_search"></i>
+                    <span>搜索</span>
+                </label>
+            </form>
+            <a href="javascript:" class="weui_search_cancel" style="color:#ff6666" id="search_cancel">取消</a>
+        </div>
+        <div class="weui_panel weui_panel_access">
+            <div class="weui_panel_hd">常见问题解答</div>
+			<div class="weui_navbar">
+                <div class="weui_navbar_item weui_bar_item_on" data="question">
+                    疑问解答
+                </div>
+                <div class="weui_navbar_item" data="self">
+                    我的问题
+                </div>
+                <div class="weui_navbar_item" data="enter">
+                    提交问题
+                </div>
+            </div>
+            <div class="weui_panel_bd" id="question">
+				
+            </div>
+            <div class="weui_panel_bd" id="self" style="display:none">
+				
+			</div>
+			<div class="weui_panel_bd" id="search" style="display:none">
+				
+			</div>
+			<div class="weui_panel_bd" id="enter" style="display:none;padding-top:20px;p">
+				<div class="weui_cells_title"></div>
+				<form method="post" action="__SELF__" onsubmit="return check();">
+				<div class="weui_cells weui_cells_form">
+					<div class="weui_cell">
+						<div class="weui_cell_bd weui_cell_primary">
+							<textarea class="weui_textarea" name="title" id="title" placeholder="请输入问题概括描述" rows="4"></textarea>
+						</div>
+						
+					</div>
+					<div  class="weui_cells_title" id="tishi" style="color:red;display:none">请输入问题描述</div>
+					<button type="submit" class="weui_btn weui_btn_primary" style="width:95%;margin:0 atuo;background:#ff6666;">确认提交</button>
+				</div>
+				</form>
+			</div>
+        </div>
+    </div>
+</body>
+<script>
+var state = 'question';var keyword = '';
+$(document).ready(function(){
+	getpage(1);
+});
+function getpage(p){
+	if(state == 'search'){var url = "{:U('question_ajax')}?keyword="+keyword+"&p="+p;}
+	if(state == 'question'){var url = "{:U('question_ajax')}?p="+p;}
+	if(state == 'self'){var url = "{:U('question_ajax')}?user_id={$Think.session.user_id}&p="+p;}
+	$('#'+state).html('<div style="text-align:center;margin:0 auto;width:15%;margin-top:30px;margin-bottom:30px;"><img src="__PUBLIC__/admin/images/loading.gif" ></div>');
+	$('#'+state).load(
+		url,
+		function() {}
+	);
+}
+function getself(p){
+	$('#self').html('<div style="text-align:center;margin:0 auto;width:15%;margin-top:30px;margin-bottom:30px;"><img src="__PUBLIC__/admin/images/loading.gif" ></div>');
+	$("#self").load(
+		"{:U('question_ajax')}?user_id=1&p="+p,
+		function() {}
+	);
+}
+function check(){
+	var title = $('#title').val();
+	if(title == ''){$('#tishi').css('display','block');return false;}else{$('#tishi').css('display','none');}
+	
+}
+function search(){
+	keyword = $('#search_input').val();
+	if(keyword == ''){dialog2('请输入关键词搜索');return false;}
+	$('.weui_panel_bd').each(function(){
+		$(this).css('display','none');
+	});
+	$('#search').css('display','block');state = 'search';
+	getpage(1);
+	return false;
+}
+$('.weui_navbar_item').on('click',function(){
+	var data = $(this).attr('data');
+	$('.weui_navbar_item').each(function(){
+		$(this).removeClass('weui_bar_item_on');
+	});
+	$(this).addClass('weui_bar_item_on');
+	$('.weui_panel_bd').each(function(){
+		$(this).css('display','none');
+	});
+	$('#'+data).css('display','block');
+	if(data == 'question'){
+		state = "question";getpage(1);
+	}
+	if(data == 'self'){
+		state = "self";getpage(1);
+	}
+});
+$('#search_input').click(function(){
+	$('#search_bar').addClass('weui_search_focusing');
+});
+$('#search_cancel').click(function(){
+	$('#search_bar').removeClass('weui_search_focusing');
+	$('#search_input').val('');
+});
+$('#search_clear').click(function(){
+	$('#search_bar').removeClass('weui_search_focusing');$('#search_input').val('');
+});
+</script>
+</html>

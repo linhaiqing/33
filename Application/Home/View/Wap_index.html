@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+	<meta name="format-detection"content="telephone=no"/>
+	<title>{$newsinfo[0]['title']}</title>
+	<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/font-awesome.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/weui.min.css">
+	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+	<style>
+		body{max-width:700px;margin:0 auto;font-family: "Helvetica Neue","Hiragino Sans GB","Microsoft YaHei","\9ED1\4F53",Arial,sans-serif;}
+		.title{color:#000;margin-top:25px;}
+		.news-desc{font-size:16px;}
+		.news-desc .time{color:#787777;}
+		.news-desc .appname{color:#5d82b3;}
+		.content{margin-top:30px;font-size:16px;min-height:300px;}
+		.content img{max-width:100%;}
+		.foot{margin:10px 0px 25px 0px;}
+		.foot .handle{color:#5d82b3;}
+	</style>
+</head>
+<body style="background:#fff">
+	<div class="container-fluid">
+		<h3 class="title">{$newsinfo[0]['title']}</h3>
+		<div class="news-desc">
+			<span class="time">{$newsinfo[0]['createtime']}</span>　
+			<span class="appname">{$appname}</span>
+		</div>
+		<div class="clearfix visible-xs-block"></div>
+		<div class="content">{$newsinfo[0]['content']}</div>
+		<div class="foot"><span style="color:#8c8c8c;font-size:16px;margin-right:20px">阅读 100000+</span><span class="icon-thumbs-up-alt handle"></span> <span style="color:#8c8c8c;">369</span></div>
+	</div>
+	
+	<!-- <i class="icon-spinner icon-spin"></i> Spinner icon when loading content... -->
+</body>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+wx.config({
+	debug: false,
+	appId: '<?php echo $signPackage["appId"];?>',
+	timestamp: <?php echo $signPackage["timestamp"];?>,
+	nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+	signature: '<?php echo $signPackage["signature"];?>',
+	jsApiList: [
+		// 所有要调用的 API 都要加到这个列表中
+		'checkJsApi',
+		'addCard',
+		'chooseCard',
+		'openCard',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'showOptionMenu',
+		'showAllNonBaseMenuItem',
+		//'hideMenuItems',
+		'hideAllNonBaseMenuItem',
+		'menuItem:profile'
+	  ]
+});
+wx.ready(function(){
+	var imgUrl = "http://"+window.location.host+$(".content img:first").attr("src");
+	var desc = $('.content').text();
+	wx.onMenuShareTimeline({
+		title: "", // 分享标题
+		link: "", // 分享链接
+		imgUrl: imgUrl, // 分享图标
+		success: function () { 
+			// 用户确认分享后执行的回调函数
+		},
+		cancel: function () { 
+			// 用户取消分享后执行的回调函数
+		}
+	});
+	wx.onMenuShareAppMessage({
+		title: "", // 分享标题
+		desc: desc, // 分享描述
+		link: "", // 分享链接
+		imgUrl: imgUrl, // 分享图标
+		type: '', // 分享类型,music、video或link，不填默认为link
+		dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+		success: function () { 
+			// 用户确认分享后执行的回调函数
+		},
+		cancel: function () { 
+			// 用户取消分享后执行的回调函数
+		}
+	});
+});
+</script>
+</html>

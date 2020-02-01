@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<meta content="telephone=no" name="format-detection">
+    <title>个人中心</title>
+   <!--  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="__PUBLIC__/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/weui.min.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css"/>
+	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+	<script src="__PUBLIC__/js/slide.js"></script>
+	<script src="__PUBLIC__/layer-mobile/layer.js"></script>
+	<script src="__PUBLIC__/js/base.js"></script>
+	<link rel="stylesheet" href="__PUBLIC__/css/slide.css">
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+wx.config({
+			debug: false,
+			appId: '<?php echo $signPackage["appId"];?>',
+			timestamp: <?php echo $signPackage["timestamp"];?>,
+			nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+			signature: '<?php echo $signPackage["signature"];?>',
+			jsApiList: [
+				// 所有要调用的 API 都要加到这个列表中
+				'checkJsApi',
+				'addCard',
+				'chooseCard',
+				'openCard',
+				'onMenuShareTimeline',
+				'onMenuShareAppMessage',
+				'closeWindow',
+				'hideOptionMenu',
+				'hideAllNonBaseMenuItem',
+				'menuItem:profile'
+			  ]
+		});
+wx.ready(function(){
+	wx.hideAllNonBaseMenuItem();//alert('<?php echo $paysign["timeStamp"];?>');
+});
+function youhui(){
+loading('发送请求中…');
+setTimeout(function(){
+loadingclose();
+if('{$userinfo.daijin}' == 0){
+	dialog2('您目前没有代金券哦~');
+}else{
+layer.open({
+    type: 1,
+    content: '<div style="font-size:18px;text-align:center;">100元代金券，未使用</div><div style="text-align:center;margin:20px;"><img src="__PUBLIC__/daijin/{$userinfo.user_id}.png" width="50%"></div><div style="text-align:center;">使用时出示该二维码，代理商扫描核销</div>',
+    anim: 0,
+    style: 'position:fixed; bottom:30%; left:0; width:100%;  padding:10px 0; border:none;background:#ff6666;color:#fff;text-align:center'
+});
+}
+
+},500);
+
+}
+function updtuserinfo(){
+	centersetclose();loading('正在更新…');
+	$.ajax({
+			type: "POST",
+			url: "{:U('updtuserinfo')}",
+			dataType: "json",
+			data: {},
+			success: function(json){
+				if(json.success==1){
+					dialog2(json.info);	loadingclose();	
+				}else{
+					dialog2(json.info);	loadingclose();			
+				}
+			},
+			error:function(){
+				dialog2("发生异常！");loadingclose();
+			}
+		});
+}
+function resetqr(){
+	centersetclose();loading('正在重置…');
+	$.ajax({
+			type: "POST",
+			url: "{:U('resetqr')}",
+			dataType: "json",
+			data: {},
+			success: function(json){
+				if(json.success==1){
+					dialog2(json.info);	loadingclose();	
+				}else{
+					dialog2(json.info);	loadingclose();			
+				}
+			},
+			error:function(){
+				dialog2("发生异常！");loadingclose();
+			}
+		});
+
+}
+function zhitui(){
+	dialog2("上线筹备中…");
+}
+</script>
+</head>
+<body style="background: #efedf1;margin-bottom:70px;">
+	<div class="center-header">
+		<!-- <div class="person-pic"><img src="{$userinfo.headimgurl}" style="border:1px solid #fff"></div>
+		<div class="person-all">
+			<div style="border-bottom:0px solid #7a8389">{$userinfo.nickname}</div> -->
+			<!-- <div style="border-bottom:1px solid #7a8389"><span>关注时间</span>：{$userinfo.subscribe_time}</div> -->
+			<!-- <div class=""><span>会员ID</span>：{$userinfo.user_id}</div> -->
+			<!-- <div style="border-bottom:0px solid #7a8389">您是{$userinfo.agent}</div>
+		</div> -->
+		<div class="" style="padding-left:0;">
+			<div class="left person-pic" style="border-left:4px solid #ff6666;">
+				<img src="{$userinfo.headimgurl}" width="40px">
+			</div>
+			<div class="left weui_cell_primary" style="text-align:left;padding-left:3%;margin:4% 0;margin-left:4%;font-size:12px;border-left:1px solid #fff;width:60%;overflow:hidden;">
+				<p style="white-space: nowrap;text-overflow:ellipsis;overflow:hidden;">昵称：{$userinfo.nickname}</p>
+				<p style="white-space: nowrap;text-overflow:ellipsis;overflow:hidden;"><span>会员ID</span>：{$userinfo.user_id}</p>
+				<p style="white-space: nowrap;text-overflow:ellipsis;overflow:hidden;">会员级别：{$userinfo.agent}</p>
+				<p style="white-space: nowrap;text-overflow:ellipsis;overflow:hidden;"><span>关注时间</span>：{$userinfo.subscribe_time}</p>
+			</div>
+		</div>
+		<div class="" style="position:absolute;font-size:22px;top:10px;right:5%;" onclick="centerset(1)"><i class="icon-cogs"></i></div>
+		<div class="weui_navbar" style="position:relative;background:rgba(0,0,0,0.0);">
+			<div class="weui_navbar_item" onclick="youhui()">
+				代金券<br /><span>{$userinfo.daijin}</span>个
+			</div>
+			<div class="weui_navbar_item">
+				红包收入<br /><span><?php echo $money;?></span>元
+			</div>
+			<div class="weui_navbar_item" onclick="qr()">
+				<i class="icon-qrcode icon-2x" style="color:yellow"></i><br />二维码<!-- <br /><span></span>个 -->
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	
+	<div style="text-align:center;margin-top:5px;margin-bottom:-10px;font-size:14px;color:#555;">您是由{$userinfo.append}推荐关注</div>
+	<div class="weui_cells weui_cells_access center-list">
+		<!-- <a class="weui_cell" href="javascript:;" data-src="{:U('/Shop/index')}">
+			<div class="weui_cell_bd weui_cell_primary">
+				<p><i class="icon-shopping-cart"> </i> 商城入口</p>
+			</div>
+			<div class="weui_cell_ft">
+			</div>
+		</a> -->
+		<div class="weui_cell">
+			<div class="weui_cell_bd weui_cell_primary">
+				<p><i class="icon-sitemap"> </i> 家族成员</p>
+				
+			</div>
+			<div class="weui_cell_ft">
+			</div>
+		</div>
+		<div class="weui_navbar" style="position:relative;">
+			<a href="javascript:;" data-src="{:U('group')}?group_id=1" class="weui_navbar_item">
+				1渡人脉<br /><span>{$num.frist_num}</span>人
+			</a>
+			<a href="javascript:;" data-src="{:U('group')}?group_id=2" class="weui_navbar_item">
+				2渡人脉<br /><span>{$num.second_num}</span>人
+			</a>
+			<a href="javascript:;" data-src="{:U('group')}?group_id=3" class="weui_navbar_item">
+				3渡人脉<br /><span>{$num.thrid_num}</span>人
+			</a>
+		</div>
+		<div class="weui_navbar" style="position:relative;">
+			<a href="javascript:;" data-src="{:U('group')}?group_id=4" class="weui_navbar_item">
+				4渡人脉<br /><span>{$num.four_num}</span>人
+			</a>
+			<a href="javascript:;" data-src="{:U('group')}?group_id=5" class="weui_navbar_item">
+				5渡人脉<br /><span>{$num.five_num}</span>人
+			</a>
+			<a href="javascript:;" data-src="{:U('group')}?group_id=6" class="weui_navbar_item">
+				6渡人脉<br /><span>{$num.six_num}</span>人
+			</a>
+		</div>
+		<div class="weui_navbar" style="position:relative;">
+			<a href="javascript:;" data-src="{:U('group')}?group_id=7" class="weui_navbar_item">
+				7渡人脉<br /><span>{$num.seven_num}</span>人
+			</a>
+			<a href="javascript:;" data-src="{:U('group')}?group_id=8" class="weui_navbar_item">
+				8渡人脉<br /><span>{$num.eight_num}</span>人
+			</a>
+			<a href="javascript:;" data-src="{:U('group')}?group_id=9" class="weui_navbar_item">
+				9渡人脉<br /><span>{$num.nine_num}</span>人
+			</a>
+		</div>
+		<a class="weui_cell" href="javascript:;" data-src="{:U('hongbao')}">
+			<div class="weui_cell_bd weui_cell_primary">
+				<p><i class="icon-envelope "> </i>人脉红包<if condition="$hb_num neq 0 "><span class="notice-word" style="color:red">{$hb_num}个未领取</span></if></p>
+			</div>
+			<div class="weui_cell_ft">
+			</div>
+		</a>
+		<a class="weui_cell" href="javascript:;" data-src="{:U('zthongbao')}">
+			<div class="weui_cell_bd weui_cell_primary">
+				<p><i class="icon-envelope "> </i>奖励红包<if condition="$zt_num neq 0 "><span class="notice-word" style="color:red">{$zt_num}个未领取</span></if></p>
+			</div>
+			<div class="weui_cell_ft">
+			</div>
+		</a>
+		<!-- <a class="weui_cell" href="javascript:;" data-src="{:U('order')}">
+			<div class="weui_cell_bd weui_cell_primary">
+				<p><i class="icon-truck"> </i>我的订单<if condition="$hb_num neq 0 "></if></p>
+			</div>
+			<div class="weui_cell_ft">
+			</div>
+		</a> -->
+		<!-- <a class="weui_cell" href="javascript:;" data-src="{:U('broke')}">
+			<div class="weui_cell_bd weui_cell_primary">
+				<p><i class="icon-money"> </i>我的佣金</p>
+			</div>
+			<div class="weui_cell_ft">
+			</div>
+		</a>
+		<a class="weui_cell" href="javascript:;" data-src="{:U('chat_all')}">
+			<div class="weui_cell_bd weui_cell_primary">
+				<p><i class="icon-comment"> </i>聊天会话<if condition="$chat_num neq 0 "><span class="notice-word" style="color:red">有{$chat_num}条未读消息</span></if></p>
+			</div>
+			<div class="weui_cell_ft">
+			</div>
+		</a> -->
+		<a class="weui_cell" href="javascript:;" data-src="{:U('zhitui')}">
+			<div class="weui_cell_bd weui_cell_primary">
+				<p><i class="icon-group"> </i>直推人脉</p>
+			</div>
+			<div class="weui_cell_ft">
+			</div>
+		</a>
+		<a class="weui_cell" href="javascript:;" data-src="{:U('question')}">
+			<div class="weui_cell_bd weui_cell_primary">
+				<p><i class="icon-question-sign"> </i>常见问题<if condition="$hb_num neq 0 "></if></p>
+			</div>
+			<div class="weui_cell_ft">
+			</div>
+		</a>
+	</div>
+	<!-- <div  style="height:30px;margin-top:30px;font-size:12px;color:#999;text-align:center;"></div> -->
+	<div id="window" style="display:none;"></div>
+</body>
+<script>
+	$('.center-list a').click(function(){
+		$(this).css('background','#ccc');
+		//$('#window').css('display','block');
+		$('body').addClass('jumpmove');
+		var src = $(this).attr('data-src');
+		setTimeout(function(){location.href=src;},800);
+		
+	});
+	function qr(){
+		loading('正在生成…');
+		$.ajax({
+			type: "POST",
+			url: "{:U('qr')}",
+			dataType: "json",
+			data: {},
+			success: function(json){
+				if(json.success==1){
+					location.href="{:U('qr_show')}";
+				}else{
+					dialog2(json.info);	loadingclose();			
+				}
+			},
+			error:function(){
+				dialog2("发生异常！");loadingclose();
+			}
+		});
+	}
+</script>
+</html>

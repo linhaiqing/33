@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<!-- saved from url=(0030)//classify.html -->
+<html>
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>
+      {$app_info[0]['wxname']}商城
+    </title>
+    <link rel="stylesheet" href="__PUBLIC__/shop/css/3c30a65871.layout.min.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/shop/css/footer.css">
+    <script>
+      __STAT.add('head_load');
+    </script>
+    <script src="__PUBLIC__/shop/css/562a4c0e89.jquery-2.1.0.min.js">
+    </script>
+  </head>
+
+  <body class=" hAndroid hPC">
+    <include file="./Application/Shop/View/Index_wxjs.html" />
+    <!-- 地理位置 -->
+    <script>
+      var downloadAppConfig = {
+        cls: 'KexSirug',
+        url: '//service-download.html',
+        page: 'classify'
+      }
+    </script>
+    <header id="header" class="u-header clearfix">
+      <div class="u-hd-left f-left">
+        <a href="javascript:void(0)" onclick="history.go(-1);" class="J_backToPrev">
+          <span class="u-icon i-hd-back">
+          </span>
+        </a>
+      </div>
+      <span class="u-hd-tit">
+        商品分类
+      </span>
+      <div class="u-hd-right f-right">
+        <a href="{:U('index')}" mars_sead="nav_home_btn">
+          <span class="u-icon i-hd-home">
+          </span>
+        </a>
+      </div>
+    </header>
+    <ul class="search_category_list">
+      <volist name="categrey" id="vv" empty="无商品分类">
+        <li>
+          <div class="hd">
+            <h2>
+              {$vv.cate_name}
+            </h2>
+          </div>
+          <div class="bd">
+            <ul class="sub_category_list clearfix">
+              <volist name="vv['arr']" id="kk" empty="暂无下级分类">
+                <li>
+                  <a href="{:U('search')}?pid={$kk.cate_id}" mars_sead="classify-19626-19627_btn">
+                    <div class="pic">
+                      <img src="/{$kk.pic_url}" alt="">
+                    </div>
+                    <p class="name">
+                      {$kk.cate_name}
+                    </p>
+                  </a>
+                </li>
+              </volist>
+            </ul>
+          </div>
+        </li>
+      </volist>
+    </ul>
+    <div class="layout-login-area" id="footer">
+      <div class="layout-login">
+        <span class="layout-lg-bar">
+          529157244@qq.com
+        </span>
+        <span class="layout-new-fr">
+          <a href="">
+            反馈
+          </a>
+        </span>
+      </div>
+      <div class="layout-copyright">
+        ©  版权所有
+      </div>
+    </div>
+    <!--以下是底部样式-->
+    <div style="display: block;" class="footer_bar openwebview">
+      <ul class="warp clearfix">
+        <li>
+          <!--<li class="on">-->
+          <a href="{:U('index')}" page_click_button="底部_首页">
+            <i class="new_icon">
+            </i>
+            <span>
+              首页
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="{:U('catelist')}" page_click_button="底部_品牌">
+            <i class="new_icon">
+            </i>
+            <span>
+              分类
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="{:U('/User/center')}" data-url="" page_click_button="底部_我的" class="to_personalcenter personalcenternum">
+            <i class="new_icon">
+              <strong style="display: none;">
+              </strong>
+            </i>
+            <span>
+              我的
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="{:U('categrey')}" data-url="" page_click_button="底部_购物车" class="new_car_center">
+            <i class="new_icon">
+              <strong <if condition="$num eq 0">
+                style="display:none"
+                </if>
+                >{$num}
+              </strong>
+            </i>
+            <span>
+              购物车
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <a href="" class="u-backtop" mars_sead="home_foot_top_btn">
+    </a>
+    <!--以下是浮于显示屏左下角的购物袋-->
+    <script src="__PUBLIC__/shop/css/c6d4147a04.page.classify.top.min.js">
+    </script>
+  </body>
+
+</html>

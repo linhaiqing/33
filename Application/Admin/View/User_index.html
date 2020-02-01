@@ -1,0 +1,228 @@
+ <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+  <title>系统管理后台</title>
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+   <link rel="stylesheet" href="__PUBLIC__/css/font-awesome.min.css">
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="__PUBLIC__/admin/css/base.css">
+  <style>
+  body{margin:0;padding:0;background:#44b549;}
+.login{background:url(__PUBLIC__/images/form.png) no-repeat;background-size:100%;position:absolute;left:50%;top:40%;width:640px;
+	height:320px;margin-left:-320px;margin-top:-160px;padding:60px 0px;-webkit-animation: login 3s ease-in-out 1s 1 alternate forwards;}
+@-webkit-keyframes login /* Safari 和 Chrome */
+{
+0% {top:40%;}
+40% {top:56%;}
+55% {top:47%;}
+65% {top:54%;}
+75% {top:48%;}
+85% {top:52%;}
+95% {top:49%;}
+100% {top:50%;}
+}
+h2{ -webkit-animation: h2 2s ease 0s infinite alternate;}
+@-webkit-keyframes h2 /* Safari 和 Chrome */
+{
+from{color:#fff;}
+to{color:green;}
+}
+	.audio{ 
+/*设置音乐显示位置*/
+	width:45px;
+	float:right;
+	margin-top:-97px;margin-right:120px;
+	z-index:100;
+	filter:alpha(opacity=30);  
+      -moz-opacity:0.5;  
+      -khtml-opacity: 0.5;  
+      opacity: 0.5;
+	}
+  .footer{position:absolute;bottom:20%;color:green;font-size:16px;width:100%;}
+  </style>
+</head>
+<script>
+
+if(window !=top){
+    top.location.href=location.href;  
+}
+</script>
+<body oncontextmenu=self.event.returnValue=false onselectstart="return false">
+	<div class="login" style="">
+		<form class="form-inline" style="margin-left:10px;" onsubmit="return checked()"  action="__SELF__" method="post">
+			<div class="col-sm-12 text-center" style="margin-bottom:55px">
+			 <h2 style="color:#182d6c">微信系统管理后台</h2>
+			</div>
+			<audio controls="true" autoplay="autoplay" class="audio" loop="loop">
+        <source src="__PUBLIC__/Music_clip.mp3" type="audio/mp3">	
+    </audio>
+			<div style="clear:both"></div>
+			<div class="text-center">
+		  <div class="form-group">
+			<div class="input-group">
+			  <div class="input-group-addon" style="background:#fff;"><span class="glyphicon glyphicon-user" style="color:#44b549"></span></div>
+			  <input type="text" class="form-control" name="username" value="" id="input1" placeholder="用户名">
+			</div>
+		  </div>
+		  <div class="form-group">
+			<div class="input-group">
+			  <div class="input-group-addon" style="background:#fff;"><span class="icon-lock" style="color:#44b549"></span></div>
+			   <input type="password" class="form-control" name="password" value="" id="input2" placeholder="密码">
+			</div>
+		  </div>
+		  <div class="form-group" style="margin-left:15px">
+			
+			  <button type="button" class="btn btn-success" data-loading-text="请稍候..." style="background:#fff;color:#44b549">立即登录</button>
+		   
+		  </div>
+		  </div>
+		</form>
+
+	</div>
+
+
+<div class="canvaszz"> </div>
+ <canvas id="canvas"></canvas> 
+<script src="__PUBLIC__/admin/layer/layer.js"></script>
+<script>
+$('.btn-success').click(function(){
+	var $btn = $(this).button('loading');
+	var username = $('#input1').val();if(username == ''){layer.closeAll();layer.msg("请输入用户名");$btn.button('reset');exit;}
+	var password = $('#input2').val();if(password == ''){layer.closeAll();layer.msg("请输入用户密码");$btn.button('reset');exit;}
+	$.ajax({
+			type: "POST",
+			url: "{:U('index')}?time="+new Date(),
+			dataType: "json",
+			data: {
+				"username":username,
+				"password":password,
+			},
+			success: function(json){
+				if(json.success == 1){
+					layer.msg("登录成功，正在跳转到管理台");
+					setTimeout(function(){
+						location.href="{:U('Index/index')}";
+					},2000);
+				}else{
+					layer.msg("帐号密码有误！");$btn.button('reset');
+				}
+			},
+			error:function(){	
+				layer.msg("帐号密码有误！");$btn.button('reset');
+			}
+		});
+});
+ $(document.body).css({
+   "overflow-x":"hidden",
+   "overflow-y":"hidden"
+ });
+//宇宙特效//fillStyle
+"use strict";
+var canvas = document.getElementById('canvas'),
+  ctx = canvas.getContext('2d'),
+
+  w = canvas.width = window.innerWidth,
+  h = canvas.height = window.innerHeight,
+
+  hue = 217,
+  stars = [],
+  count = 0,
+  maxStars = 1300;//星星数量
+var canvas2 = document.createElement('canvas'),
+  ctx2 = canvas2.getContext('2d');
+canvas2.width = 100;
+canvas2.height = 100;
+var half = canvas2.width / 2,
+  gradient2 = ctx2.createRadialGradient(half, half, 0, half, half, half);
+gradient2.addColorStop(0.025, '#fff');
+gradient2.addColorStop(0.1, 'hsl(' + hue + ', 61%, 33%)');
+gradient2.addColorStop(0.25, 'hsl(' + hue + ', 64%, 6%)');
+gradient2.addColorStop(1, 'transparent');
+
+ctx2.fillStyle = gradient2;
+ctx2.beginPath();
+ctx2.arc(half, half, half, 0, Math.PI * 2);
+ctx2.fill();
+
+// End cache
+
+function random(min, max) {
+  if (arguments.length < 2) {
+    max = min;
+    min = 0;
+  }
+
+  if (min > max) {
+    var hold = max;
+    max = min;
+    min = hold;
+  }
+
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function maxOrbit(x, y) {
+  var max = Math.max(x, y),
+    diameter = Math.round(Math.sqrt(max * max + max * max));
+  return diameter / 2;
+  //星星移动范围，值越大范围越小，
+}
+
+var Star = function() {
+
+  this.orbitRadius = random(maxOrbit(w, h));
+  this.radius = random(60, this.orbitRadius) / 8; 
+  //星星大小
+  this.orbitX = w / 2;
+  this.orbitY = h / 2;
+  this.timePassed = random(0, maxStars);
+  this.speed = random(this.orbitRadius) / 50000; 
+  //星星移动速度
+  this.alpha = random(2, 10) / 10;
+
+  count++;
+  stars[count] = this;
+}
+
+Star.prototype.draw = function() {
+  var x = Math.sin(this.timePassed) * this.orbitRadius + this.orbitX,
+    y = Math.cos(this.timePassed) * this.orbitRadius + this.orbitY,
+    twinkle = random(10);
+
+  if (twinkle === 1 && this.alpha > 0) {
+    this.alpha -= 0.05;
+  } else if (twinkle === 2 && this.alpha < 1) {
+    this.alpha += 0.05;
+  }
+
+  ctx.globalAlpha = this.alpha;
+  ctx.drawImage(canvas2, x - this.radius / 2, y - this.radius / 2, this.radius, this.radius);
+  this.timePassed += this.speed;
+}
+
+for (var i = 0; i < maxStars; i++) {
+  new Star();
+}
+
+function animation() {
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.globalAlpha = 0.5; //尾巴
+  ctx.fillStyle = '#44b549';
+  ctx.fillRect(0, 0, w, h)
+
+  ctx.globalCompositeOperation = 'lighter';
+  for (var i = 1, l = stars.length; i < l; i++) {
+    stars[i].draw();
+  };
+
+  window.requestAnimationFrame(animation);
+}
+
+animation();
+</script>
+</body>
+</html>

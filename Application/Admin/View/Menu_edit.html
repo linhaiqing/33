@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<link rel="stylesheet" href="__PUBLIC__/css/style.css" />
+	<script type="text/javascript" src="__PUBLIC__/js/tinybox.js"></script>
+	<title>添加自定义菜单</title>
+	
+	<script> 
+
+		function ddd() {
+			document.getElementById("select1").value = "{$info[0][type]}";
+			if(document.f.type.value == "click") {
+				document.all.tb1.style.display = "block"; 
+			}
+			if (document.f.type.value == "view") { 
+				document.all.tb2.style.display = "block"; 
+			}
+
+		}
+		function setChange() { 
+			if (document.f.type.value == "click") { 
+				document.all.tb1.style.display = "block"; 
+			}else { 
+				document.all.tb1.style.display = "none"; 
+			} 
+			if (document.f.type.value == "view") { 
+				document.all.tb2.style.display = "block"; 
+			} else { 
+				document.all.tb2.style.display = "none"; 
+			} 
+		}
+	
+	</script> 
+</head>
+<body  onload="ddd()">
+	<form action="{:U('edit')}" method="post" name="f">
+					<div class="addmenu">菜单名称　　　<input type="text" name="title" value="{$info[0][title]}"  style="height:25px;width:200px;padding-left:10px"/></div>
+					<div class="addmenu">父级菜单　　　
+						<select name="pid" id="" style="height:25px;width:200px;padding-left:10px" >
+							
+							<if condition="$info[0][pid] neq 0 ">
+								<option value="{$pidtitle[0].id}" selected >{$pidtitle[0].title}</option>
+							 <volist name="pinfo" id="vv">
+	
+								<option value="{$vv.id}"  >{$vv.title}</option>
+								
+							</volist> 
+							
+							<else />
+							<option value="{$info[0].pid}">当前为一级菜单</option>
+						</if>
+						</select>
+					</div>
+					<div class="addmenu">菜单类型　　　
+						<select name="type" onchange="setChange()"  style="height:25px;width:200px;padding-left:10px" id="select1">
+							<option value="click" >关键词回复</option>
+							<option value="view" >URL跳转链接</option>
+							<option value="scancode_push" >扫一扫</option>
+							<option value="scancode_waitmsg" >扫一扫</option>
+							<option value="pic_sysphoto" >拍照发图</option>
+							<option value="pic_photo_or_album" >从相册或相机发图</option>
+							<option value="pic_weixin" >相册发图</option>
+							<option value="location_select" >发送地理位置</option>
+						</select>
+					</div>
+					<div class="addmenu" id="tb1" style="display:none;color:red">关联关键词　　　
+						<input type="text" name="keyword" value="{$info[0][keyword]}"  style="height:25px;width:200px;padding-left:10px"/>
+					</div>
+					<div class="addmenu" id="tb2" style="display:none;color:red">外链地址　　　
+						<input type="text" name="url" value="{$info[0][url]}"  style="height:25px;width:200px;padding-left:10px"/>
+					</div>
+					<div class="addmenu">是否显示　　　　　
+						<input type="radio"  name="is_show" value="1" <if condition="$info[0][is_show] eq 1">checked</if> /><span style="font-weight:normal">显示</span>
+						<input type="radio" name="is_show" value="0" <if condition="$info[0][is_show] eq 0">checked</if> /><span style="font-weight:normal">隐藏</span>
+					</div>	
+					<div class="addmenu">排序　　　　　
+						<input type="text" name="code" value="{$info[0][code]}"  style="height:25px;width:50px;padding-left:10px"/>
+					</div>
+					<input type="hidden" name="id" value="{$info[0][id]}" />
+					<input type="submit" value="确认提交"  id="closeIframe1" style="width:170px;height:40px;font-weight:bold;line-height:40px;text-align:center; background:#F1F1F1;border-radius:5px;border:1px solid #ccc;margin:20px 50px;cursor:pointer" />
+					</form>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+	<title>{$app_info[0].wxname}--优惠券核销</title>
+	<link rel="stylesheet" href="__PUBLIC__/css/weui.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/base.css">
+	<script src="__PUBLIC__/layer-mobile/layer.js"></script>
+	<script src="__PUBLIC__/js/base.js"></script>
+	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<style>
+.self-title{font-weight:bold;}
+</style>
+<script>
+wx.config({
+			debug: false,
+			appId: '<?php echo $signPackage["appId"];?>',
+			timestamp: <?php echo $signPackage["timestamp"];?>,
+			nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+			signature: '<?php echo $signPackage["signature"];?>',
+			jsApiList: [
+				// 所有要调用的 API 都要加到这个列表中
+				'checkJsApi',
+				'addCard',
+				'openCard',
+				'onMenuShareTimeline',
+				'onMenuShareAppMessage',
+				'showOptionMenu',
+				'hideAllNonBaseMenuItem',
+				'menuItem:profile'
+			  ]
+		});
+wx.ready(function(){
+wx.hideAllNonBaseMenuItem();
+	
+});
+function showTooltips(){
+	layer.open({
+		content: '您确认要核销该代金券吗？',
+		btn: ['确认', '取消'],
+		shadeClose: false,
+		yes: function(){
+			layer.closeAll();loading('系统处理中');
+			$.ajax({
+				type: "POST",
+				url: "{:U('daijin_del')}?time="+new Date(),
+				dataType: "json",
+				data: {
+					"user_id":'{$userinfo.user_id}',
+					"from_user_id":'{$user_info.user_id}',
+				},
+				success: function(json){
+					loadingclose();
+					layer.open({content: json.info,shadeClose: false, time: 5});setTimeout(function(){wx.closeWindow();},2000);
+					
+				},
+				error:function(){	
+					loadingclose();
+					layer.open({content: '发生网络通信阻塞，请稍后重试！',shadeClose: false, time: 2});
+				}
+			});
+		}, no: function(){
+			
+		}
+	});
+}
+</script>
+<style>
+.weui_input{color:#ff6666;}
+</style>
+</head>
+<body style="background:rgba(255,255,255,0.7);">
+	<div class="weui_cells_title">代金券核销</div>
+	<div class="weui_cells weui_cells_form">
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">类型</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" type="text" style="text-align:center" pattern="[0-9]*" value="100元代金券" readonly placeholder="">
+            </div>
+        </div>
+		<div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">会员ID</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" type="text" style="text-align:center" pattern="[0-9]*" value="{$userinfo.user_id}" readonly placeholder="">
+            </div>
+        </div>
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">昵称</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" type="text" style="text-align:center" pattern="[0-9]*" value="{$userinfo.nickname}" readonly placeholder="">
+            </div>
+        </div>
+        
+    </div>
+	<div class="weui_cells_tips">{$user_info.nickname},您是系统代理商，有权核销代金券，如果确认核销该代金券，请点击下方按钮</div>
+	<div class="weui_btn_area">
+        <a class="weui_btn weui_btn_primary" href="javascript:" onclick="showTooltips()">现在核销</a>
+    </div>
+
+</body>
+</html>

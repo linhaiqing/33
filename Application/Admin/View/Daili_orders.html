@@ -1,0 +1,148 @@
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/base.css">
+<link href="__PUBLIC__/admin/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+<div class="container-fluid main">
+	<div class="main-top"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>代理管理</div>
+	<div class="main-content">
+
+		<div>
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+		    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">订单列表</a></li>		    
+		  </ul>
+		  
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+		    <div role="tabpanel" class="tab-pane active" id="home">
+				<div class="alert alert-success" style="padding:5px 10px;margin:15px 0;line-height:30px;">
+					<div class="col-lg-3 col-md-3" style="padding:0;margin:3px;">
+						<div class="input-group input-group">
+						  <span class="input-group-addon" id="sizing-addon1">订单号</span>
+						  <input type="text" class="form-control" name="order_sn" id="order_sn" placeholder="输入订单号查询" aria-describedby="sizing-addon1">
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-3" style="padding:0;margin:3px;">
+						<div class="input-group input-group">
+						  <span class="input-group-addon" id="sizing-addon1">会员ID</span>
+						  <input type="text" class="form-control" name="user_id" id="user_id" placeholder="输入会员ID查询" aria-describedby="sizing-addon1">
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-3" style="padding:0;margin:3px;">
+						<div class="input-group input-group">
+						  <span class="input-group-addon" id="sizing-addon1">订单状态</span>
+						  <select class="form-control" name="is_true" id="is_true">
+						  <option value="1">已支付</option>
+						  <option value="0">未支付</option>
+						  </select>
+						</div>
+					</div>
+					<div class="col-lg-2 col-md-2" style="padding:0;margin:3px;">
+						<div class="input-group input-group">
+						  <input class="btn btn-default" type="submit" value="搜索" onclick="getpage(1)">
+						</div>
+					</div>
+					 <div class="clearfix visible-xs-block"></div><div style="clear:both"></div>
+				</div>
+				<div id="list">
+				<table class="table table-bordered table-hover" style="font-size:14px;margin-top:10px;">
+					<th>订单编号</th>
+					<th>会员名称</th>
+					<th>会员ID</th>
+					<th>购买项目</th>
+					<th>支付金额</th>
+					<th>支付状态</th>
+					<th>订单日期</th>
+					<th>操作</th>
+					<volist name="info" id="vv" key="kk" empty="暂无数据">
+					<tr id="{$kk}" style="font-size:13px;">
+						<td>{$vv.order_sn}</td>
+						<td>{$vv.nickname}</td>
+						<td>{$vv.user_id}</td>
+						<td>{$vv.desc}</td>
+						<td>{$vv.total_fee}</td>
+						<td><if condition="$vv.is_true eq 1 ">已支付<else /><span style="color:red">未支付</span></if></td>
+						<td>{$vv.time}</td>
+						<td><button class="btn btn-default" onclick="more('{$vv.user_id}')">更多</button></td>
+					</tr>
+					</volist>
+				</table>
+				<div class="pagelist">{$page}</div>
+		    </div>
+		    </div>
+		  </div>
+		</div>
+		
+	</div>
+</div>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js"></script>
+
+<script src="__PUBLIC__/admin/js/fileinput.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/fileinput_locale_zh.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/layer/layer.js"></script>
+<script>
+	$('#myTabs a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+function getpage(p){
+var sn = $('#order_sn').val();//alert(sn);
+var user_id = $('#user_id').val();//alert(sn);
+var is_true = $('#is_true').val();
+	$('#list').html('<div style="text-align:center;margin-top:30px;"><img src="__PUBLIC__/admin/images/loading.gif" width="60px" ></div>');
+	$("#list").load(
+		"{:U('orders_ajax')}?sn="+sn+"&p="+p+"&user_id="+user_id+"&is_true="+is_true,
+		function() {}
+	);
+}
+function more(user_id){
+	$.ajax({
+		type: "POST",
+		url: "{:U('get_address')}?time="+new Date(),
+		dataType: "json",
+		data: {
+			"id":user_id,
+		},
+		success: function(json){
+			layer.open({
+				type: 1,
+				skin: 'layui-layer-rim', //加上边框
+				area: ['420px', '240px'], //宽高
+				content: json.info
+			});
+		},
+		error:function(){
+			layer.msg("发生通信错误");
+		}
+	});
+	
+}
+function del(obj,id){
+	//alert(id);
+	layer.confirm('删除后无法恢复，确认删除吗', {
+		btn: ['确认','取消'] //按钮
+	}, function(){
+		$.ajax({
+			type: "POST",
+			url: "{:U('del')}?time="+new Date(),
+			dataType: "json",
+			data: {
+				"id":id,
+			},
+			success: function(json){
+				layer.msg("删除成功");
+				var td = $(obj).parent();//alert(a);
+				td.parent().css("display","none");	
+			},
+			error:function(){	
+			}
+		});
+	}, function(){
+		
+	});
+	
+	
+}
+
+</script>

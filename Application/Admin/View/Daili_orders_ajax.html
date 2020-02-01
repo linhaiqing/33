@@ -1,0 +1,67 @@
+
+
+				<div id='user'>
+				<table class="table table-bordered table-hover" style="font-size:14px;margin-top:10px;">
+					<th>订单编号</th>
+					<th>会员名称</th>
+					<th>会员ID</th>
+					<th>购买项目</th>
+					<th>支付金额</th>
+					<th>支付状态</th>
+					<th>订单日期</th>
+					
+					<volist name="info" id="vv" key="kk" empty="暂无数据">
+					<tr id="{$kk}" style="font-size:13px;">
+						<td>{$vv.order_sn}</td>
+						<td>{$vv.nickname}</td>
+						<td>{$vv.user_id}</td>
+						<td>{$vv.desc}</td>
+						<td>{$vv.total_fee}</td>
+						<td><if condition="$vv.is_true eq 1 ">已支付<else /><span style="color:red">未支付</span></if></td>
+						<td>{$vv.time}</td>
+					</tr>
+					</volist>
+					
+				</table>
+				<div class="pagelist">{$page}</div>
+		    </div>
+		    
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/layer/layer.js"></script>
+<script>
+ function order(id){    //user函数名 一定要和action中的第三个参数一致上面有
+                 var id = id;
+                    $.get("{:U(Daili/orders)}", {'p':id}, function(data){  //用get方法发送信息到UserAction中的user方法
+                    // alert(data);
+					$('$user').load("http://www.baidu.com");
+					 //$("#user").replaceWith("<div  id='user'>"+data+"</div>"); //user一定要和tpl中的一致
+                });
+             }
+function del(obj,id){
+	//alert(id);
+	layer.confirm('删除后无法恢复，确认删除吗', {
+		btn: ['确认','取消'] //按钮
+	}, function(){
+		$.ajax({
+			type: "POST",
+			url: "{:U('del')}?time="+new Date(),
+			dataType: "json",
+			data: {
+				"id":id,
+			},
+			success: function(json){
+				layer.msg("删除成功");
+				var td = $(obj).parent();//alert(a);
+				td.parent().css("display","none");	
+			},
+			error:function(){	
+			}
+		});
+	}, function(){
+		
+	});
+	
+	
+}
+
+</script>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>
+      {$app_info[0]['wxname']}商城
+    </title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/shop/css/public.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/shop/css/home.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/shop/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/shop/css/reset.css" media="all">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/shop/css/common1.css" media="all">
+    <!--首页幻灯js-->
+    <script type="text/javascript" src="__PUBLIC__/shop/css/zepto.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/shop/css/swipe.js"></script>
+    <!--首页幻灯js end-->
+  </head>
+
+  <body>
+    <include file="./Application/Shop/View/Index_wxjs.html" />
+    <div style="position:fixed;z-index:999;width:100%;height:100%;background:rgba(0,0,0,0.6);display:none;"
+    id="none">
+    </div>
+	<if condition = "$share_type eq 'ok' ">
+	<div style="position:fixed;z-index:999999;width:100%;height:100%;background:rgba(0,0,0,0.0);display:block;">
+		<a href="{:U('/User/Center/qr_show')}?from_id={$share_id}">
+		<div style="background:rgba(0,0,0,0.8);font-size:16px;color:#fff;padding:5px 10px;">您好！未检测到您的微信信息，暂时无法购物，请点击这里噢~</div>
+		</a>
+    </div>
+	</if>
+    <div style="overflow:hidden;">
+      <div class="searchnew" id="searchContainer" style="width:100%;padding:10px 0;">
+        <div class="products-search-item" style="margin-top:0;">
+          <div class="main-nav-search ">
+            <form action="{:U('search')}" method="post">
+              <div class="input-group" style="z-index:1000;">
+                <input autocomplete="off" id="input-main-nav-search" class="form-control"
+                name="keyword" value="" style="width:98%;" title="产品搜索" placeholder="产品搜索"
+                type="search">
+                <span class="input-group-btn">
+                  <button class="btn5 submit" type="submit" id="btnSearch">
+                    <i class="search-icon">
+                    </i>
+                  </button>
+                </span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="banner openwebview">
+      <div style="-webkit-transform:translate3d(0,0,0);">
+        <div id="banner_box" class="box_swipe">
+          <ul style="list-style: none outside none; transition-duration: 500ms;">
+            <volist name="bannar" id="vv">
+              <li>
+                <a onClick="return false;">
+                  <img src="/{$vv.pic_url}" alt="2" style="width:100%;">
+                </a>
+              </li>
+            </volist>
+          </ul>
+          <ol>
+            <volist name="bannar" id="vv" key="k">
+              <li <if condition="$k eq 1">
+                class="on"
+                </if>
+                >
+              </li>
+            </volist>
+          </ol>
+        </div>
+      </div>
+      <script>
+        $(function() {
+          new Swipe(document.getElementById('banner_box'), {
+            speed: 500,
+            auto: 3000,
+            callback: function() {
+              var lis = $(this.element).next("ol").children();
+              lis.removeClass("on").eq(this.index).addClass("on");
+            }
+          });
+          $('#input-main-nav-search').click(function() {
+            $('#none').css('display', 'block');
+          });
+          $('#input-main-nav-search').blur(function() {
+            $('#none').css('display', 'none');
+          });
+        });
+      </script>
+    </div>
+    <div class="recommend openwebview">
+      <div style="display: block;" class="tit">
+        <h2>
+          精挑细选才出众
+        </h2>
+      </div>
+      <div class="wrap">
+        <!--广告-->
+        <volist name="ad" id="v">
+          <a href="{$v.link}">
+            <div style="padding:5px;background:#fff;">
+              <img src="/{$v.pic_url}" width="100%">
+            </div>
+          </a>
+        </volist>
+        </volist>
+        <volist name="good_list" id="v">
+          <if condition="$v['info'][0]['good_name'] neq '' ">
+            <style>
+              .recommend .caption_life:after {background-color: #ff6666;}
+            </style>
+            <div class="item" page_click_button="">
+              <a href="{:U('search')}?gid={$v.cate_gid}">
+                <div class="caption">
+                  <h3 class="caption_life">
+                    {$v.name}
+                  </h3>
+                  <span class="browse">
+                    点击查看更多
+                  </span>
+                </div>
+              </a>
+              <div class="item_con clearfix" page_click_button="单品">
+                <volist name="v['info']" id="k">
+                  <dl>
+                    <dt>
+                      <a href="{:U(good)}?good_id={$k.good_id}" data-url="">
+                        <img class="fadeInImg" _src="" src="/{$k.pic_url}">
+                        <if condition="$k['best'] eq 1 ">
+                          <span class="special">
+                            精品
+                          </span>
+                          <else />
+                          <if condition="$k['hot'] eq 1 ">
+                            <span class="special">
+                              热销
+                            </span>
+                            <else />
+                            <if condition="$k['new'] eq 1 ">
+                              <span class="special">
+                                新品
+                              </span>
+                            </if>
+                          </if>
+                        </if>
+                      </a>
+                    </dt>
+                    <dd>
+                      <p class="txt">
+                        {$k.good_name}
+                      </p>
+                      <div class="price clearfix">
+                        <span class="now_price">
+                          <i>
+                            ￥
+                          </i>
+                          <em>
+                            {$k.good_price}
+                          </em>
+                        </span>
+                        <span class="old_price">
+                          <i>
+                            ￥
+                          </i>
+                          <em>
+                            {$k.market_price}
+                          </em>
+                        </span>
+                      </div>
+                    </dd>
+                  </dl>
+                </volist>
+              </div>
+            </div>
+          </if>
+        </volist>
+        <div class="layout-login-area" id="footer">
+          <div class="layout-login">
+            <span class="layout-lg-bar">
+              529157244@qq.com
+            </span>
+            <span class="layout-new-fr">
+              <a href="">
+                反馈
+              </a>
+            </span>
+          </div>
+          <div class="layout-copyright">
+            ©  版权所有
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display: block;" class="footer_bar openwebview">
+      <ul class="warp clearfix">
+        <li>
+          <!--<li class="on">-->
+          <a href="{:U('index')}" page_click_button="底部_首页">
+            <i class="new_icon">
+            </i>
+            <span>
+              首页
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="{:U('catelist')}" page_click_button="底部_品牌">
+            <i class="new_icon">
+            </i>
+            <span>
+              分类
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="{:U('/User/center')}" data-url="" page_click_button="底部_我的" class="to_personalcenter personalcenternum">
+            <i class="new_icon">
+              <strong style="display: none;">
+              </strong>
+            </i>
+            <span>
+              我的
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="{:U('categrey')}" data-url="" page_click_button="底部_购物车" class="new_car_center">
+            <i class="new_icon">
+              <strong <if condition="$num eq 0">
+                style="display:none"
+                </if>
+                >{$num}
+              </strong>
+            </i>
+            <span>
+              购物车
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </body>
+
+</html>

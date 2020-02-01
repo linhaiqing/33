@@ -1,0 +1,1 @@
+a:1:{i:0;a:8:{s:6:"app_id";s:1:"1";s:6:"wxname";s:6:"竹盐";s:4:"wxid";s:0:"";s:6:"weixin";s:0:"";s:5:"appid";s:18:"wx519e0913f52cd64a";s:9:"appsecret";s:32:"e274c5607710d8a9f62a6088a1595674";s:6:"machid";s:1:"0";s:4:"mkey";s:0:"";}}

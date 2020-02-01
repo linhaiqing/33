@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>{$app_info[0]['wxname']}商城</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/shop/css/public.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/shop/css/home.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/shop/css/footer.css">
+
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/shop/css/reset.css" media="all">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/shop/css/common1.css" media="all">
+<style>.recommend .caption_life:after {background-color: #ff6666;}</style>
+<!--首页幻灯js-->
+<script type="text/javascript" src="__PUBLIC__/shop/css/zepto.js"></script>
+<script type="text/javascript" src="__PUBLIC__/shop/css/swipe.js"></script>
+<!--首页幻灯js end-->
+</head>
+<body><include file="./Application/Shop/View/Index_wxjs.html" />
+	<div style="overflow:hidden;">
+       <div class="searchnew" id="searchContainer" style="width:100%;padding:10px 0;">
+			<div class="products-search-item" style="margin-top:0;">
+				<div class="main-nav-search ">
+				<form action="__SELF__" method="post">
+					<div class="input-group">
+						<input autocomplete="off" id="input-main-nav-search" class="form-control" name="keyword" value="{$keyword}" style="width:98%;" title="产品搜索" placeholder="产品搜索" type="search">
+						<span class="input-group-btn"><button class="btn5 submit" type="submit" id="btnSearch"><i class="search-icon"></i></button></span>
+					</div>
+				</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+    <div class="recommend openwebview">
+<div class="wrap">
+
+
+
+	<div class="item" page_click_button="">
+		<div class="caption">
+			<h3 class="caption_life"><a href="">您要查看的商品是</a></h3>
+			<!-- <span class="browse">(3.6万人正在浏览)</span> -->
+		</div>
+
+		<div class="item_con clearfix" page_click_button="单品">
+			<volist name="good_list" id="k" empty="未找到您查找的商品">
+			<dl>
+			<dt>
+			<a href="{:U(good)}?good_id={$k.good_id}" data-url="">
+			<img class="fadeInImg" _src="" src="/{$k.pic_url}">
+			<if condition="$k['best'] eq 1 ">
+			<span class="special">精品</span>
+			<else />
+			<if condition="$k['hot'] eq 1 ">
+			<span class="special">热销</span>
+			<else />
+			<if condition="$k['new'] eq 1 ">
+			<span class="special">新品</span>
+			</if>
+			</if>
+			</if>
+
+			</a>
+			</dt>
+			<dd>
+			<p class="txt">{$k.good_name}</p>
+			<div class="price clearfix">
+			<span class="now_price"><i>￥</i><em>{$k.good_price}</em></span>
+			<span class="old_price"><i>￥</i><em>{$k.market_price}</em></span>
+			</div>
+			</dd>
+			</dl>
+			</volist>
+		</div>
+
+	</div>
+
+
+	<div class="layout-login-area" id="footer">
+		<div class="layout-login">
+			<span class="layout-lg-bar">529157244@qq.com </span>
+			<span class="layout-new-fr"><a href="">反馈</a></span>
+		</div>
+		<div class="layout-copyright">©  版权所有</div>
+	</div>
+</div>
+    </div>
+
+    <div style="display: block;" class="footer_bar openwebview">
+        <ul class="warp clearfix">
+            <li><!--<li class="on">-->
+                <a href="{:U('index')}" page_click_button="底部_首页">
+                    <i class="new_icon"></i>
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="{:U('catelist')}" page_click_button="底部_品牌">
+                    <i class="new_icon"></i>
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="{:U('/User/center')}" data-url="" page_click_button="底部_我的" class="to_personalcenter personalcenternum">
+                    <i class="new_icon"><strong style="display: none;"></strong></i>
+                    <span>我的</span>
+                </a>
+            </li>
+            <li>
+                <a href="{:U('categrey')}" data-url="" page_click_button="底部_购物车" class="new_car_center">
+                  <i class="new_icon"><strong <if condition="$num eq 0">style="display:none"</if> >{$num}</strong></i>
+                    <span>购物车</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+
+</body>
+
+</html>

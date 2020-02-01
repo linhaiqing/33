@@ -1,0 +1,17 @@
+<table class="table table-bordered table-hover" style="font-size:14px;color:#555;">
+					<th>核销会员</th>
+					<th>核销代理商</th>
+					<th>操作时间</th>
+					
+					
+					<volist name="info" id="vv" key="kk">
+					<tr id="{$kk}" style="font-size:13px;">
+						<td valign="middle"><img src="{$vv.del_user.headimgurl}" width="35px">{$vv.del_user.nickname} [ID:{$vv.del_user_id}]</td>
+						<td><img src="{$vv.user.headimgurl}" width="35px">{$vv.user.nickname} [ID:{$vv.user_id}]</td>
+						<td>{$vv.time}</td>
+						
+					</tr>
+					</volist>
+					
+				</table>
+				<div class="pagelist">{$page}</div>

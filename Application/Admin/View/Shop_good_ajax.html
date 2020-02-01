@@ -1,0 +1,27 @@
+<table class="table table-striped table-hover" style="font-size:14px;table-layout:fixed">
+			<th style="width:8%;">ID</th>
+			<th style="width:;">名称</th>
+			<th style="width:">所属分类</th>
+			<th style="width:50px;text-align:center;">精品</th>
+			<th style="width:50px;text-align:center;">热销</th>
+			<th style="width:50px;text-align:center;">新品</th>
+			<th style="width:50px;text-align:center;">上架</th>
+			<th style="width:10%;text-align:center;">库存</th>
+			<th>操作</th>
+			<volist name="good_list" id="vv" key="kk">
+			<tr height="20px" style="overflow:hidden">
+				<td>{$vv.good_id}</td>
+				<td>{$vv.good_name}</td>
+				<td  style="white-space: nowrap;text-overflow:ellipsis;overflow:hidden;"><button type="button" class="btn btn-link">{$vv.cate_name}</button></td>
+				<td style="text-align:center;"><if condition="$vv['best'] eq 1"><i class="icon-check icon-large" data_id="{$vv.good_id}" alt="{$vv.best}" data="best"></i><else /><i class="icon-check-empty icon-large" data_id="{$vv.good_id}" alt="{$vv.best}" data="best"></i></if></td>
+				<td style="text-align:center;"><if condition="$vv['hot'] eq 1"><i class="icon-check icon-large" data_id="{$vv.good_id}" alt="{$vv.hot}" data="hot"></i><else /><i class="icon-check-empty icon-large" data_id="{$vv.good_id}" alt="{$vv.hot}" data="hot"></i></if></td>
+				<td style="text-align:center;"><if condition="$vv['new'] eq 1"><i class="icon-check icon-large" data_id="{$vv.good_id}" alt="{$vv.new}" data="new"></i><else /><i class="icon-check-empty icon-large" data_id="{$vv.good_id}" alt="{$vv.new}" data="new"></i></if></td>
+				<td style="text-align:center;"><if condition="$vv['is_true'] eq 1"><i class="icon-check icon-large" data_id="{$vv.good_id}" alt="{$vv.is_true}" data="is_true"></i><else /><i class="icon-check-empty icon-large" data_id="{$vv.good_id}" alt="{$vv.is_true}" data="is_true"></i></if></td>
+				<td style="text-align:center;">{$vv.number}</td>
+				<td>
+				<a href="{:U('goodedit')}?good_id={$vv.good_id}"><button type="button" class="btn btn-default btn-sm">修改</button></a>
+				<button type="button" class="btn btn-default btn-sm" onclick="del(this,'{$vv.good_id}')">删除</button></td>						
+			</tr>
+			</volist>
+		</table>
+		<div class="pagelist">{$page}</div>

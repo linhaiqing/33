@@ -1,0 +1,19 @@
+<table class="table table-bordered table-hover" style="font-size:14px;margin-top:10px;">
+<th>购买人信息</th>
+<th>接包人信息</th>
+<th>支付订单号</th>
+<th>红包金额</th>
+<th>领取状态</th>
+<th>生成时间</th>
+<volist name="info" id="vv" key="kk" empty="暂无数据">
+<tr id="{$kk}" style="font-size:13px;">
+	<td>【{$vv.from_user_id}】{$vv.fromnickname}</td>
+	<td>【{$vv.user_id}】{$vv.tonickname}</td>
+	<td>{$vv.order_sn}</td>
+	<td>{$vv.hongbao_fee}</td>
+	<td>已发放<if condition="$vv.is_true eq 1">已领取<else /><font color="red">未领取</font></if></td>
+	<td>{$vv.time}</td>
+</tr>
+</volist>
+</table>
+<div class="pagelist">{$page}</div>

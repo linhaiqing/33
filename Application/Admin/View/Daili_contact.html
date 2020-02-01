@@ -1,0 +1,182 @@
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/base.css">
+<link href="__PUBLIC__/admin/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+<div class="container-fluid main">
+	<div class="main-top"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>代理管理</div>
+	<div class="main-content">
+<style>
+.nickname{white-space: nowrap;text-overflow:ellipsis;overflow:hidden;}
+img{max-width:80px;}
+div img{max-height:100px;}
+</style>
+		<div>
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+		    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">会员族谱</a></li>
+			<li role="presentation"><a href="javascript:void(0);" onclick="history.go(-1);">返回上一页</a></li>	
+		  </ul>
+		  
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+		    <div role="tabpanel" class="tab-pane active" id="home">
+			<div class="text-center" style="margin-top:10px;background:#f7f7f9;"><img src="{$user_info.headimgurl}" class="img-circle" style="border:1px solid #ccc" width="12%"></div>
+			<div class="text-center" style="background:#f7f7f9;">{$user_info.nickname}的族谱</div>
+				
+				
+				<div class="bg-success" style="padding:10px;margin:5px 0;">父级用户</div>
+				<div style="background:#f7f7f9;padding:10px;border:1px solid #e1e1e8;">
+					<volist name="pid_info" id="vv" empty="未购买代理，购买后系统会分配上一级">
+					<div class="col-sm-2 text-center" title="{$vv.nickname}">
+						<div><img src="{$vv.headimgurl}" class="img-circle" width="70%"></div>
+						<div style="color:#999">会员ID：{$vv.user_id}</div>
+						<div class="nickname" style="color:#666">{$vv.nickname}</div>
+					</div>
+					</volist>
+					<div style="clear:both"></div>
+				</div>
+				<div class="bg-success" style="padding:10px;margin:5px 0;">一度人脉 <span style="color:red">【<?php echo count($first_info);?>个】</span></div>
+				<div style="background:#f7f7f9;padding:10px;border:1px solid #e1e1e8;">
+					<volist name="first_info" id="vv" empty="无">
+					<div class="col-sm-2 text-center" title="{$vv.nickname}">
+						<div><img src="{$vv.headimgurl}" class="img-circle" width="70%"></div>
+						<div style="color:#999">会员ID：{$vv.user_id}</div>
+						<div class="nickname" style="color:#666">{$vv.nickname}</div>
+					</div>
+					</volist>
+					<div style="clear:both"></div>
+				</div>
+				<div class="bg-success" style="padding:10px;margin:5px 0;">二度人脉 <span style="color:red">【<?php echo count($second_info);?>个】</span>	</div>
+				<div style="background:#f7f7f9;padding:10px;border:1px solid #e1e1e8;">
+					<volist name="second_info" id="vv" empty="无">
+					<div class="col-sm-2 text-center" title="{$vv.nickname}">
+						<div><img src="{$vv.headimgurl}" class="img-circle" width="70%"></div>
+						<div style="color:#999">会员ID：{$vv.user_id}</div>
+						<div class="nickname" style="color:#666">{$vv.nickname}</div>
+					</div>
+					</volist>
+					<div style="clear:both"></div>
+				</div>
+				<div class="bg-success" style="padding:10px;margin:5px 0;">三度人脉<span style="color:red">【<?php echo count($third_info);?>个】</span></div>
+				<div style="background:#f7f7f9;padding:10px;border:1px solid #e1e1e8;">
+					<volist name="third_info" id="vv" empty="无">
+					<div class="col-sm-2 text-center" title="{$vv.nickname}">
+						<div><img src="{$vv.headimgurl}" class="img-circle" width="70%"></div>
+						<div style="color:#999">会员ID：{$vv.user_id}</div>
+						<div class="nickname" style="color:#666">{$vv.nickname}</div>
+					</div>
+					</volist>
+					<div style="clear:both"></div>
+				</div>
+				<div class="bg-success" style="padding:10px;margin:5px 0;">四度人脉<span style="color:red">【<?php echo count($four_info);?>个】</span></div>
+				<div style="background:#f7f7f9;padding:10px;border:1px solid #e1e1e8;">
+					<volist name="four_info" id="vv" empty="无">
+					<div class="col-sm-2 text-center" title="{$vv.nickname}">
+						<div><img src="{$vv.headimgurl}" class="img-circle" width="70%"></div>
+						<div style="color:#999">会员ID：{$vv.user_id}</div>
+						<div class="nickname" style="color:#666">{$vv.nickname}</div>
+					</div>
+					</volist>
+					<div style="clear:both"></div>
+				</div>
+				<div class="bg-success" style="padding:10px;margin:5px 0;">五度人脉<span style="color:red">【<?php echo count($five_info);?>个】</span></div>
+				<div style="background:#f7f7f9;padding:10px;border:1px solid #e1e1e8;">
+					<volist name="five_info" id="vv" empty="无">
+					<div class="col-sm-2 text-center" title="{$vv.nickname}">
+						<div><img src="{$vv.headimgurl}" class="img-circle" width="70%"></div>
+						<div style="color:#999">会员ID：{$vv.user_id}</div>
+						<div class="nickname" style="color:#666">{$vv.nickname}</div>
+					</div>
+					</volist>
+					<div style="clear:both"></div>
+				</div>
+				<div class="bg-success" style="padding:10px;margin:5px 0;">六度人脉<span style="color:red">【<?php echo count($six_info);?>个】</span></div>
+				<div style="background:#f7f7f9;padding:10px;border:1px solid #e1e1e8;">
+					<volist name="six_info" id="vv" empty="无">
+					<div class="col-sm-2 text-center" title="{$vv.nickname}">
+						<div><img src="{$vv.headimgurl}" class="img-circle" width="70%"></div>
+						<div style="color:#999">会员ID：{$vv.user_id}</div>
+						<div class="nickname" style="color:#666">{$vv.nickname}</div>
+					</div>
+					</volist>
+					<div style="clear:both"></div>
+				</div>
+				<div class="bg-success" style="padding:10px;margin:5px 0;">七度人脉<span style="color:red">【<?php echo count($seven_info);?>个】</span></div>
+				<div style="background:#f7f7f9;padding:10px;border:1px solid #e1e1e8;">
+					<volist name="seven_info" id="vv" empty="无">
+					<div class="col-sm-2 text-center" title="{$vv.nickname}">
+						<div><img src="{$vv.headimgurl}" class="img-circle" width="70%"></div>
+						<div style="color:#999">会员ID：{$vv.user_id}</div>
+						<div class="nickname" style="color:#666">{$vv.nickname}</div>
+					</div>
+					</volist>
+					<div style="clear:both"></div>
+				</div>
+				<div class="bg-success" style="padding:10px;margin:5px 0;">八度人脉<span style="color:red">【<?php echo count($eight_info);?>个】</span></div>
+				<div style="background:#f7f7f9;padding:10px;border:1px solid #e1e1e8;">
+					<volist name="eight_info" id="vv" empty="无">
+					<div class="col-sm-2 text-center" title="{$vv.nickname}">
+						<div><img src="{$vv.headimgurl}" class="img-circle" width="70%"></div>
+						<div style="color:#999">会员ID：{$vv.user_id}</div>
+						<div class="nickname" style="color:#666">{$vv.nickname}</div>
+					</div>
+					</volist>
+					<div style="clear:both"></div>
+				</div>
+				<div class="bg-success" style="padding:10px;margin:5px 0;">九度人脉<span style="color:red">【<?php echo count($nine_info);?>个】</span></div>
+				<div style="background:#f7f7f9;padding:10px;border:1px solid #e1e1e8;">
+					<volist name="nine_info" id="vv" empty="无">
+					<div class="col-sm-2 text-center" title="{$vv.nickname}">
+						<div><img src="{$vv.headimgurl}" class="img-circle" width="70%"></div>
+						<div style="color:#999">会员ID：{$vv.user_id}</div>
+						<div class="nickname" style="color:#666">{$vv.nickname}</div>
+					</div>
+					</volist>
+					<div style="clear:both"></div>
+				</div>
+		    </div>
+		
+		  </div>
+		</div>
+		
+	</div>
+</div>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js"></script>
+
+<script src="__PUBLIC__/admin/js/fileinput.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/fileinput_locale_zh.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/layer/layer.js"></script>
+<script>
+	$('#myTabs a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+function del(obj,id){
+	//alert(id);
+	layer.confirm('删除后无法恢复，确认删除吗', {
+		btn: ['确认','取消'] //按钮
+	}, function(){
+		$.ajax({
+			type: "POST",
+			url: "{:U('del')}?time="+new Date(),
+			dataType: "json",
+			data: {
+				"id":id,
+			},
+			success: function(json){
+				layer.msg("删除成功");
+				var td = $(obj).parent();//alert(a);
+				td.parent().css("display","none");	
+			},
+			error:function(){	
+			}
+		});
+	}, function(){
+		
+	});
+	
+	
+}
+
+</script>

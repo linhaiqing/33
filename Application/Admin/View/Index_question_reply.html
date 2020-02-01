@@ -1,0 +1,72 @@
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/base.css">
+<link href="__PUBLIC__/admin/css/jquery.minicolors.css" rel="stylesheet" type="text/css" />
+<div class="container-fluid main">
+	<div class="main-top"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>客户疑答</div>
+	<div class="main-content">
+<style>
+.table tr td{font-size:12px;vertical-align:middle;}
+.form-control{font-size:8px;}
+</style>
+		<div>
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+		    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">回复问题</a></li>		    
+		  </ul>
+		  
+		  <!-- Tab panes -->
+		  <!-- 模板编号	模板名	回复内容	头部颜色	文字颜色	状态	模板ID -->
+		  <div class="tab-content">
+		    <div role="tabpanel" class="tab-pane active" id="home">
+				
+				<div class="well" style="margin-top:20px;">
+				<form class="form-horizontal" action="__SELF__" method="post" onsubmit="" enctype="multipart/form-data" >
+					<div class="tab-content well" style="margin-top:5px;border:1px solid #dddddd;padding:10px 2%;">
+				  
+					<div role="tabpanel" class="tab-pane active" id="home">
+						
+					  <div class="form-group">
+						<label for="inputEmail3" class="col-sm-12">客户问题:<span style="color:red;font-size:18px;">{$info.title}</span></label>
+					</div>
+					<div class="form-group">
+					<label for="inputEmail3" class="col-sm-3 control-label">处理成功后是否模版消息提醒用户</label>
+					<div class="col-sm-2">
+					<select class="form-control" name="template">
+					  <option value="1">通知</option>
+					  <option value="0">不通知</option>
+					</select>
+					</div>
+						
+					</div>
+					
+						<input type="hidden" name="id" value="{$info.id}">
+						<input type="hidden" name="info" value="{$info.title}">
+						<input type="hidden" name="user_id" value="{$info.user_id}">
+						<div class="form-group">
+							<div class="col-sm-12">
+								<script id="editor" type="text/plain" name="content" style="width:100%;height:200px;">{$info.content}</script>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+							   <button type="submit" class="btn btn-default">确认提交</button>
+							</div>
+						</div>
+					</div>
+					</div>
+				</form>
+		</div>
+		
+	</div>
+</div>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/admin/layer/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+<script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.all.js"></script>
+<script>
+var ue = UE.getEditor('editor');
+  imagePathFormat: "/images/upload/image/{yyyy}{mm}{dd}/{time}{rand:6}";
+</script>
